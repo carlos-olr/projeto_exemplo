@@ -76,18 +76,41 @@
 	
 	<changeSet id="009" author="carlos.oliveira">
 		<addForeignKeyConstraint
-			constraintName="FK_USUARIOPAPEL_USUARIO"
+			constraintName="FK_USUARIOGRUPOPAPEL_USUARIO"
 			referencedTableName="PROJETO_TESTE_USUARIO"
 			referencedColumnNames="ID" 
 			baseTableName="PROJETO_TESTE_USUARIO_GRUPO_PAPEL"
 			baseColumnNames="ID_USUARIO" />
 			
 		<addForeignKeyConstraint
-			constraintName="FK_USUARIOPAPEL_PAPEL"
+			constraintName="FK_USUARIOGRUPOPAPEL_GRUPO"
 			referencedTableName="PROJETO_TESTE_GRUPO_PAPEL"
 			referencedColumnNames="ID" 
 			baseTableName="PROJETO_TESTE_USUARIO_GRUPO_PAPEL"
-			baseColumnNames="ID_GRUPO" />
+			baseColumnNames="ID_GRUPO_PAPEL" />
+	</changeSet>
+
+	<include file="br/com/spektro/minispring/liquibase/changelog-master.xml" />
+	
+	<changeSet id="010" author="carlos.oliveira">
+		<insert tableName="GERADOR_IDS">
+			<column name="NEXT_ID" value="1"/>
+			<column name="TABLE_NAME" value="PROJETO_TESTE_USUARIO"/>
+		</insert>
+	</changeSet>
+	
+	<changeSet id="011" author="carlos.oliveira">
+		<insert tableName="GERADOR_IDS">
+			<column name="NEXT_ID" value="1"/>
+			<column name="TABLE_NAME" value="PROJETO_TESTE_PAPEL"/>
+		</insert>
+	</changeSet>
+	
+	<changeSet id="012" author="carlos.oliveira">
+		<insert tableName="GERADOR_IDS">
+			<column name="NEXT_ID" value="1"/>
+			<column name="TABLE_NAME" value="PROJETO_TESTE_GRUPO_PAPEL"/>
+		</insert>
 	</changeSet>
 
 </databaseChangeLog>
