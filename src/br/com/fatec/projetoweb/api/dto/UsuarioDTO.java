@@ -2,13 +2,16 @@ package br.com.fatec.projetoweb.api.dto;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 public class UsuarioDTO {
 
 	// atributos
 	private Long id;
 	private String nome;
 	private String senha;
-	private List<PapelDTO> papeis;
+	private List<PapelDTO> papeis = Lists.newArrayList();
+	private List<GrupoPapelDTO> grupos = Lists.newArrayList();
 
 	// flags
 	private Boolean isAdmin;
@@ -61,6 +64,14 @@ public class UsuarioDTO {
 
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public List<GrupoPapelDTO> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<GrupoPapelDTO> grupos) {
+		this.grupos = grupos;
 	}
 
 }

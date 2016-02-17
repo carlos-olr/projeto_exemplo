@@ -1,13 +1,11 @@
 package br.com.fatec.projetoweb.api.dto;
 
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
-
 public class PapelDTO {
 
 	private Long id;
 	private String nome;
 	private String descricao;
-	private GrupoPapel grupo;
+	private GrupoPapelDTO grupo;
 
 	public Long getId() {
 		return this.id;
@@ -33,11 +31,11 @@ public class PapelDTO {
 		this.descricao = descricao;
 	}
 
-	public GrupoPapel getGrupo() {
+	public GrupoPapelDTO getGrupo() {
 		return this.grupo;
 	}
 
-	public void setGrupo(GrupoPapel grupo) {
+	public void setGrupo(GrupoPapelDTO grupo) {
 		this.grupo = grupo;
 	}
 

@@ -16,7 +16,7 @@ import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
 import br.com.fatec.projetoweb.api.dao.PapelDAO;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
-import br.com.spektro.minispring.core.implfinder.ImplementationFinder;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 import br.com.spektro.minispring.core.query.GeradorIdService;
 
 public class PapelDAOImpl implements PapelDAO {
@@ -24,7 +24,7 @@ public class PapelDAOImpl implements PapelDAO {
 	private GrupoPapelDAO grupoDao;
 
 	public PapelDAOImpl() {
-		this.grupoDao = ImplementationFinder.getImpl(GrupoPapelDAO.class);
+		this.grupoDao = ImplFinder.getImpl(GrupoPapelDAO.class);
 	}
 
 	@Override
@@ -58,9 +58,9 @@ public class PapelDAOImpl implements PapelDAO {
 		PreparedStatement update = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			update = conn.prepareStatement(
-					"UPDATE " + Papel.TABLE + " SET " + Papel.COL_NOME + " = ?, " + Papel.COL_DESCRICAO + " = ?, "
-							+ Papel.COL_GRUPO_ID + " = ? " + " WHERE " + Papel.COL_ID + " = ?");
+			update = conn.prepareStatement("UPDATE " + Papel.TABLE + " SET "
+					+ Papel.COL_NOME + " = ?, " + Papel.COL_DESCRICAO + " = ?, "
+					+ Papel.COL_GRUPO_ID + " = ? " + " WHERE " + Papel.COL_ID + " = ?");
 			update.setString(1, papel.getNome());
 			update.setString(2, papel.getDescricao());
 			update.setLong(3, papel.getGrupo().getId());
@@ -99,7 +99,8 @@ public class PapelDAOImpl implements PapelDAO {
 		Papel user = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "SELECT * FROM " + Papel.TABLE + " WHERE " + Papel.COL_ID + " = ?;";
+			String sql = "SELECT * FROM " + Papel.TABLE + " WHERE " + Papel.COL_ID
+					+ " = ?;";
 			find = conn.prepareStatement(sql);
 			find.setLong(1, id);
 			ResultSet rs = find.executeQuery();
@@ -158,7 +159,8 @@ public class PapelDAOImpl implements PapelDAO {
 			try {
 				conn = ConfigDBMapper.getDefaultConnection();
 				String args = this.preparePlaceHolders(ids.size());
-				String sql = "SELECT * FROM " + Papel.TABLE + " WHERE ID IN (" + args + ");";
+				String sql = "SELECT * FROM " + Papel.TABLE + " WHERE ID IN (" + args
+						+ ");";
 				stmt = conn.prepareStatement(sql);
 				this.setValues(stmt, ids);
 				ResultSet rs = stmt.executeQuery();
@@ -177,7 +179,8 @@ public class PapelDAOImpl implements PapelDAO {
 		return StringUtils.join(Collections.nCopies(length, "?"), ",");
 	}
 
-	private void setValues(PreparedStatement preparedStatement, List<Long> valore) throws SQLException {
+	private void setValues(PreparedStatement preparedStatement, List<Long> valore)
+			throws SQLException {
 		for (int i = 0; i < valore.size(); i++) {
 			preparedStatement.setObject(i + 1, valore.get(i));
 		}

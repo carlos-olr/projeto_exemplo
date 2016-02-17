@@ -12,7 +12,7 @@ import br.com.fatec.projetoweb.api.dao.PapelDAO;
 import br.com.fatec.projetoweb.api.entity.GrupoPapel;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.fatec.projetoweb.test.comum.TestBase;
-import br.com.spektro.minispring.core.implfinder.ImplementationFinder;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 public class PapelDAOTest extends TestBase {
 
@@ -23,8 +23,8 @@ public class PapelDAOTest extends TestBase {
 
 	@Before
 	public void config() {
-		this.dao = ImplementationFinder.getImpl(PapelDAO.class);
-		this.grupoDao = ImplementationFinder.getImpl(GrupoPapelDAO.class);
+		this.dao = ImplFinder.getImpl(PapelDAO.class);
+		this.grupoDao = ImplFinder.getImpl(GrupoPapelDAO.class);
 
 		GrupoPapel g1 = new GrupoPapel();
 		g1.setNome("Grupo 1");

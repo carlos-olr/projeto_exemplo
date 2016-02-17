@@ -48,8 +48,9 @@ public class GrupoPapelDAOImpl implements GrupoPapelDAO {
 		PreparedStatement update = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			update = conn.prepareStatement("UPDATE " + GrupoPapel.TABLE + " SET " + GrupoPapel.COL_NOME + " = ?, "
-					+ GrupoPapel.COL_DESCRICAO + " = ? " + " WHERE " + GrupoPapel.COL_ID + " = ?");
+			update = conn.prepareStatement("UPDATE " + GrupoPapel.TABLE + " SET "
+					+ GrupoPapel.COL_NOME + " = ?, " + GrupoPapel.COL_DESCRICAO + " = ? "
+					+ " WHERE " + GrupoPapel.COL_ID + " = ?");
 			update.setString(1, grupo.getNome());
 			update.setString(2, grupo.getDescricao());
 			update.setLong(3, grupo.getId());
@@ -87,7 +88,8 @@ public class GrupoPapelDAOImpl implements GrupoPapelDAO {
 		GrupoPapel user = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "SELECT * FROM " + GrupoPapel.TABLE + " WHERE " + GrupoPapel.COL_ID + " = ?;";
+			String sql = "SELECT * FROM " + GrupoPapel.TABLE + " WHERE "
+					+ GrupoPapel.COL_ID + " = ?;";
 			find = conn.prepareStatement(sql);
 			find.setLong(1, id);
 			ResultSet rs = find.executeQuery();

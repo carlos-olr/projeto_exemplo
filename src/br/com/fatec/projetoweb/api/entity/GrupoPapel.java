@@ -11,8 +11,15 @@ public class GrupoPapel {
 	private String nome;
 	private String descricao;
 
+	public GrupoPapel() {
+	}
+
+	public GrupoPapel(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -20,7 +27,7 @@ public class GrupoPapel {
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
@@ -28,7 +35,7 @@ public class GrupoPapel {
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	public void setDescricao(String descricao) {

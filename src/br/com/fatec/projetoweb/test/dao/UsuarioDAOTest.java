@@ -11,7 +11,7 @@ import org.junit.Assert;
 import br.com.fatec.projetoweb.api.dao.UsuarioDAO;
 import br.com.fatec.projetoweb.api.entity.Usuario;
 import br.com.fatec.projetoweb.test.comum.TestBase;
-import br.com.spektro.minispring.core.implfinder.ImplementationFinder;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 public class UsuarioDAOTest extends TestBase {
 
@@ -19,7 +19,7 @@ public class UsuarioDAOTest extends TestBase {
 
 	@Before
 	public void config() {
-		this.dao = ImplementationFinder.getImpl(UsuarioDAO.class);
+		this.dao = ImplFinder.getImpl(UsuarioDAO.class);
 	}
 
 	@Test

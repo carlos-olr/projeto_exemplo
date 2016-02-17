@@ -48,8 +48,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		PreparedStatement update = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			update = conn.prepareStatement("UPDATE " + Usuario.TABLE + " SET " + Usuario.COL_NOME + " = ?, "
-					+ Usuario.COL_SENHA + " = ? " + " WHERE " + Usuario.COL_ID + " = ?");
+			update = conn.prepareStatement("UPDATE " + Usuario.TABLE + " SET "
+					+ Usuario.COL_NOME + " = ?, " + Usuario.COL_SENHA + " = ? "
+					+ " WHERE " + Usuario.COL_ID + " = ?");
 			update.setString(1, usuario.getNome());
 			update.setString(2, usuario.getSenha());
 			update.setLong(3, usuario.getId());
@@ -87,7 +88,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		Usuario user = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "SELECT * FROM " + Usuario.TABLE + " WHERE " + Usuario.COL_ID + " = ?;";
+			String sql = "SELECT * FROM " + Usuario.TABLE + " WHERE " + Usuario.COL_ID
+					+ " = ?;";
 			find = conn.prepareStatement(sql);
 			find.setLong(1, id);
 			ResultSet rs = find.executeQuery();

@@ -11,7 +11,7 @@ import org.junit.Assert;
 import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
 import br.com.fatec.projetoweb.api.entity.GrupoPapel;
 import br.com.fatec.projetoweb.test.comum.TestBase;
-import br.com.spektro.minispring.core.implfinder.ImplementationFinder;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 public class GrupoPapelDAOTest extends TestBase {
 
@@ -19,7 +19,7 @@ public class GrupoPapelDAOTest extends TestBase {
 
 	@Before
 	public void config() {
-		this.dao = ImplementationFinder.getImpl(GrupoPapelDAO.class);
+		this.dao = ImplFinder.getImpl(GrupoPapelDAO.class);
 	}
 
 	@Test

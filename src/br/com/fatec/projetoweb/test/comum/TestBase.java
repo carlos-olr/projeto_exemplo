@@ -23,7 +23,8 @@ public class TestBase {
 
 	@After
 	public void setDown() {
-		QueryExecutorService.executeQuery("DELETE FROM PROJETO_TESTE_USUARIO_GRUPO_PAPEL");
+		QueryExecutorService
+				.executeQuery("DELETE FROM PROJETO_TESTE_USUARIO_GRUPO_PAPEL");
 		QueryExecutorService.executeQuery("DELETE FROM PROJETO_TESTE_USUARIO_PAPEL");
 		QueryExecutorService.executeQuery("DELETE FROM " + Papel.TABLE);
 		QueryExecutorService.executeQuery("DELETE FROM " + GrupoPapel.TABLE);
