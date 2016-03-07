@@ -1,8 +1,12 @@
 package br.com.fatec.projetoweb.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class Usuario {
 
-	public static final String TABLE = "PROJETO_TESTE_USUARIO";
+	public static final String TABLE = "PROJETO_USUARIO";
 	public static final String COL_ID = "ID";
 	public static final String COL_NOME = "NOME";
 	public static final String COL_SENHA = "SENHA";
@@ -11,8 +15,18 @@ public class Usuario {
 	private String nome;
 	private String senha;
 
+	public Usuario() {
+
+	}
+
+	public Usuario(Long id, String nome, String senha) {
+		this.id = id;
+		this.nome = nome;
+		this.senha = senha;
+	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -20,7 +34,7 @@ public class Usuario {
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
@@ -28,11 +42,19 @@ public class Usuario {
 	}
 
 	public String getSenha() {
-		return senha;
+		return this.senha;
 	}
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public static List<String> getColunas() {
+		return Lists.newArrayList(COL_ID, COL_NOME, COL_SENHA);
+	}
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_NOME, COL_SENHA };
 	}
 
 }

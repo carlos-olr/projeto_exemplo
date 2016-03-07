@@ -1,5 +1,7 @@
 package br.com.fatec.projetoweb.core.dao;
 
+import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,27 +15,37 @@ import com.google.common.collect.Lists;
 import br.com.fatec.projetoweb.api.dao.UsuarioDAO;
 import br.com.fatec.projetoweb.api.entity.Usuario;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
-import br.com.spektro.minispring.core.query.GeradorIdService;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
-
 	public Long save(Usuario usuario) {
 		Connection conn = null;
 		PreparedStatement insert = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "INSERT INTO " + Usuario.TABLE + " VALUES (?,?,?);";
-			insert = conn.prepareStatement(sql);
-			Long id = GeradorIdService.getNextId(Usuario.TABLE);
 
-			insert.setLong(1, id);
-			insert.setString(2, usuario.getNome());
-			insert.setString(3, usuario.getSenha());
+			String colunas = DAOUtils.getColunas(getDefaultConnectionType(),
+					Usuario.getColunas());
+
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(),
+					2, "SEQ_PROJETO_USUARIO");
+
+			String sql = "INSERT INTO " + Usuario.TABLE + colunas + " VALUES " + values;
+
+			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(),
+					Usuario.getColunasArray());
+
+			insert.setString(1, usuario.getNome());
+			insert.setString(2, usuario.getSenha());
 			insert.execute();
 
-			return id;
+			ResultSet generatedKeys = insert.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				return generatedKeys.getLong(1);
+			}
+
+			return null;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {

@@ -1,10 +1,12 @@
 package br.com.fatec.projetoweb.core.dao;
 
+import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
+import java.sql.Types;
 import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
@@ -14,10 +16,10 @@ import com.google.common.collect.Lists;
 
 import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
 import br.com.fatec.projetoweb.api.dao.PapelDAO;
+import br.com.fatec.projetoweb.api.entity.GrupoPapel;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
-import br.com.spektro.minispring.core.query.GeradorIdService;
 
 public class PapelDAOImpl implements PapelDAO {
 
@@ -33,17 +35,34 @@ public class PapelDAOImpl implements PapelDAO {
 		PreparedStatement insert = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "INSERT INTO " + Papel.TABLE + " VALUES (?,?,?,?);";
-			insert = conn.prepareStatement(sql);
-			Long id = GeradorIdService.getNextId(Papel.TABLE);
 
-			insert.setLong(1, id);
-			insert.setString(2, papel.getNome());
-			insert.setString(3, papel.getDescricao());
-			insert.setLong(4, papel.getGrupo().getId());
-			insert.execute();
+			String colunas = DAOUtils.getColunas(getDefaultConnectionType(),
+					Papel.getColunas());
 
-			return id;
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(),
+					3, "SEQ_PROJETO_PAPEL");
+
+			String sql = "INSERT INTO " + Papel.TABLE + colunas + " VALUES " + values;
+
+			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(),
+					Papel.getColunasArray());
+
+			insert.setString(1, papel.getNome());
+			insert.setString(2, papel.getDescricao());
+			GrupoPapel grupo = papel.getGrupo();
+			if (grupo != null) {
+				insert.setLong(3, papel.getGrupo().getId());
+			} else {
+				insert.setNull(3, Types.BIGINT);
+			}
+			insert.executeUpdate();
+
+			ResultSet generatedKeys = insert.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				return generatedKeys.getLong(1);
+			}
+
+			return null;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -58,9 +77,15 @@ public class PapelDAOImpl implements PapelDAO {
 		PreparedStatement update = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			update = conn.prepareStatement("UPDATE " + Papel.TABLE + " SET "
-					+ Papel.COL_NOME + " = ?, " + Papel.COL_DESCRICAO + " = ?, "
-					+ Papel.COL_GRUPO_ID + " = ? " + " WHERE " + Papel.COL_ID + " = ?");
+			List<String> sets = Lists.newArrayList();
+			sets.add(Papel.COL_NOME + " = ?");
+			sets.add(Papel.COL_DESCRICAO + " = ?");
+			sets.add(Papel.COL_GRUPO_ID + " = ?");
+
+			String sql = "UPDATE " + Papel.TABLE + " SET " + StringUtils.join(sets, ", ")
+					+ " WHERE " + Papel.COL_ID + " = ?";
+
+			update = conn.prepareStatement(sql);
 			update.setString(1, papel.getNome());
 			update.setString(2, papel.getDescricao());
 			update.setLong(3, papel.getGrupo().getId());
@@ -80,7 +105,7 @@ public class PapelDAOImpl implements PapelDAO {
 		PreparedStatement delete = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "DELETE FROM " + Papel.TABLE + " WHERE ID = ?;";
+			String sql = "DELETE FROM " + Papel.TABLE + " WHERE " + Papel.COL_ID + " = ?";
 			delete = conn.prepareStatement(sql);
 			delete.setLong(1, id);
 			delete.execute();
@@ -100,7 +125,7 @@ public class PapelDAOImpl implements PapelDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			String sql = "SELECT * FROM " + Papel.TABLE + " WHERE " + Papel.COL_ID
-					+ " = ?;";
+					+ " = ?";
 			find = conn.prepareStatement(sql);
 			find.setLong(1, id);
 			ResultSet rs = find.executeQuery();
@@ -122,7 +147,8 @@ public class PapelDAOImpl implements PapelDAO {
 		PreparedStatement findAll = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			findAll = conn.prepareStatement("SELECT * FROM " + Papel.TABLE);
+			findAll = conn.prepareStatement(
+					"SELECT * FROM " + Papel.TABLE + " ORDER BY " + Papel.COL_ID);
 			ResultSet rs = findAll.executeQuery();
 			return this.buildPapeis(rs);
 		} catch (Exception e) {
@@ -158,11 +184,11 @@ public class PapelDAOImpl implements PapelDAO {
 			PreparedStatement stmt = null;
 			try {
 				conn = ConfigDBMapper.getDefaultConnection();
-				String args = this.preparePlaceHolders(ids.size());
+				String args = DAOUtils.preparePlaceHolders(ids.size());
 				String sql = "SELECT * FROM " + Papel.TABLE + " WHERE ID IN (" + args
-						+ ");";
+						+ ") ORDER BY " + Papel.COL_ID + ";";
 				stmt = conn.prepareStatement(sql);
-				this.setValues(stmt, ids);
+				DAOUtils.setValues(stmt, ids);
 				ResultSet rs = stmt.executeQuery();
 				papeis = this.buildPapeis(rs);
 			} catch (Exception e) {
@@ -175,15 +201,26 @@ public class PapelDAOImpl implements PapelDAO {
 		return papeis;
 	}
 
-	private String preparePlaceHolders(int length) {
-		return StringUtils.join(Collections.nCopies(length, "?"), ",");
-	}
-
-	private void setValues(PreparedStatement preparedStatement, List<Long> valore)
-			throws SQLException {
-		for (int i = 0; i < valore.size(); i++) {
-			preparedStatement.setObject(i + 1, valore.get(i));
+	@Override
+	public List<Papel> findByGrupo(Long idGrupo) {
+		List<Papel> papeis = Lists.newArrayList();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = ConfigDBMapper.getDefaultConnection();
+			String sql = "SELECT * FROM " + Papel.TABLE + " WHERE " + Papel.COL_GRUPO_ID
+					+ " = ? ORDER BY " + Papel.COL_ID + ";";
+			stmt = conn.prepareStatement(sql);
+			stmt.setLong(1, idGrupo);
+			ResultSet rs = stmt.executeQuery();
+			papeis = this.buildPapeis(rs);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			DbUtils.closeQuietly(conn);
+			DbUtils.closeQuietly(stmt);
 		}
+		return papeis;
 	}
 
 }

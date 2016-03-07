@@ -21,13 +21,18 @@ public class PapelDTOConverter implements DTOConverter<Papel, PapelDTO> {
 
 	@Override
 	public PapelDTO toDTO(Papel entidade) {
+		PapelDTO dto = this.toDTOSimples(entidade);
+		if (entidade.getGrupo() != null) {
+			dto.setGrupo(this.grupoPapelDTOConverter.toDTO(entidade.getGrupo()));
+		}
+		return dto;
+	}
+
+	public PapelDTO toDTOSimples(Papel entidade) {
 		PapelDTO dto = new PapelDTO();
 		dto.setId(entidade.getId());
 		dto.setNome(entidade.getNome());
 		dto.setDescricao(entidade.getDescricao());
-		if (entidade.getGrupo() != null) {
-			dto.setGrupo(this.grupoPapelDTOConverter.toDTO(entidade.getGrupo()));
-		}
 		return dto;
 	}
 
@@ -43,6 +48,7 @@ public class PapelDTOConverter implements DTOConverter<Papel, PapelDTO> {
 		return entidade;
 	}
 
+	@Override
 	public List<Papel> toEntity(List<PapelDTO> dtos) {
 		List<Papel> papeis = Lists.newArrayList();
 		for (PapelDTO dto : dtos) {
@@ -51,12 +57,20 @@ public class PapelDTOConverter implements DTOConverter<Papel, PapelDTO> {
 		return papeis;
 	}
 
+	@Override
 	public List<PapelDTO> toDTO(List<Papel> entidades) {
+		return this.toDTO(entidades, false);
+	}
+
+	public List<PapelDTO> toDTOSimples(List<Papel> entidades) {
+		return this.toDTO(entidades, true);
+	}
+
+	private List<PapelDTO> toDTO(List<Papel> entidades, boolean isSimples) {
 		List<PapelDTO> papeis = Lists.newArrayList();
 		for (Papel entidade : entidades) {
-			papeis.add(this.toDTO(entidade));
+			papeis.add(isSimples ? this.toDTOSimples(entidade) : this.toDTO(entidade));
 		}
 		return papeis;
 	}
-
 }

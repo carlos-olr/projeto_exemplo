@@ -118,4 +118,20 @@ public class PapelDAOTest extends TestBase {
 		Assert.assertEquals("Grupo 2", encontrados.get(1).getGrupo().getNome());
 	}
 
+	public void runTests() {
+		this.setDown();
+		this.config();
+		this.testSave();
+		this.setDown();
+		this.config();
+		this.testUpdate();
+		this.setDown();
+		this.config();
+		this.testFindAll();
+		this.setDown();
+		this.config();
+		this.testDelete();
+		this.setDown();
+	}
+
 }

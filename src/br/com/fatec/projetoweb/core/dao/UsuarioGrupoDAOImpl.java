@@ -16,13 +16,13 @@ import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
 
 public class UsuarioGrupoDAOImpl implements UsuarioGrupoDAO {
 
-	private static final String TABLE = "PROJETO_TESTE_USUARIO_GRUPO";
-	private static final String COL_ID_GRUPO = "ID_GRUPO";
+	private static final String TABLE = "PROJETO_USUARIO_GRUPO_PAPEL";
+	private static final String COL_ID_GRUPO = "ID_GRUPO_PAPEL";
 	private static final String COL_ID_USUARIO = "ID_USUARIO";
 
 	@Override
 	public void atualizarGrupos(Long usuarioId, List<GrupoPapel> grupos) {
-		if (grupos != null && !grupos.isEmpty()) {
+		if (grupos != null) {
 			grupos.removeAll(Collections.singleton(null));
 			Connection connection = ConfigDBMapper.getDefaultConnection();
 			PreparedStatement delete = null;

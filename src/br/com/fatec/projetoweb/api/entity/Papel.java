@@ -1,8 +1,12 @@
 package br.com.fatec.projetoweb.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class Papel {
 
-	public static final String TABLE = "PROJETO_TESTE_PAPEL";
+	public static final String TABLE = "PROJETO_PAPEL";
 	public static final String COL_ID = "ID";
 	public static final String COL_NOME = "NOME";
 	public static final String COL_DESCRICAO = "DESCRICAO";
@@ -13,8 +17,22 @@ public class Papel {
 	private String descricao;
 	private GrupoPapel grupo;
 
+	public Papel() {
+	}
+
+	public Papel(Long id) {
+		this.id = id;
+	}
+
+	public Papel(Long id, String nome, String descricao, GrupoPapel grupo) {
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.grupo = grupo;
+	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -22,7 +40,7 @@ public class Papel {
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
@@ -30,7 +48,7 @@ public class Papel {
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	public void setDescricao(String descricao) {
@@ -38,11 +56,19 @@ public class Papel {
 	}
 
 	public GrupoPapel getGrupo() {
-		return grupo;
+		return this.grupo;
 	}
 
 	public void setGrupo(GrupoPapel grupo) {
 		this.grupo = grupo;
+	}
+
+	public static List<String> getColunas() {
+		return Lists.newArrayList(COL_ID, COL_NOME, COL_DESCRICAO, COL_GRUPO_ID);
+	}
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_NOME, COL_DESCRICAO, COL_GRUPO_ID };
 	}
 
 }

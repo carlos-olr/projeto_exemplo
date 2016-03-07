@@ -1,8 +1,10 @@
 package br.com.fatec.projetoweb.api.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class UsuarioDTO {
 
@@ -12,14 +14,22 @@ public class UsuarioDTO {
 	private String senha;
 	private List<PapelDTO> papeis = Lists.newArrayList();
 	private List<GrupoPapelDTO> grupos = Lists.newArrayList();
-
+	private Set<PapelDTO> papeisCompilados = Sets.newHashSet();
 	// flags
 	private Boolean isAdmin;
 
-	// getters e setters
+	public UsuarioDTO() {
+
+	}
+
+	public UsuarioDTO(Long id, String nome, String senha) {
+		this.id = id;
+		this.nome = nome;
+		this.senha = senha;
+	}
 
 	public boolean possuiPapel(String nomePapel) {
-		for (PapelDTO papel : this.papeis) {
+		for (PapelDTO papel : this.papeisCompilados) {
 			if (papel.getNome().equals(nomePapel))
 				return true;
 		}
@@ -62,16 +72,28 @@ public class UsuarioDTO {
 		return this.isAdmin;
 	}
 
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
 	public List<GrupoPapelDTO> getGrupos() {
-		return grupos;
+		return this.grupos;
 	}
 
 	public void setGrupos(List<GrupoPapelDTO> grupos) {
 		this.grupos = grupos;
 	}
 
+	public Set<PapelDTO> getPapeisCompilados() {
+		return this.papeisCompilados;
+	}
+
+	public void setPapeisCompilados(Set<PapelDTO> papeisCompilados) {
+		this.papeisCompilados = papeisCompilados;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario[" + this.id + " - " + this.nome + "]";
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 }

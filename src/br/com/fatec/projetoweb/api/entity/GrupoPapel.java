@@ -1,8 +1,12 @@
 package br.com.fatec.projetoweb.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class GrupoPapel {
 
-	public static final String TABLE = "PROJETO_TESTE_GRUPO_PAPEL";
+	public static final String TABLE = "PROJETO_GRUPO_PAPEL";
 	public static final String COL_ID = "ID";
 	public static final String COL_NOME = "NOME";
 	public static final String COL_DESCRICAO = "DESCRICAO";
@@ -16,6 +20,13 @@ public class GrupoPapel {
 
 	public GrupoPapel(Long id) {
 		this.id = id;
+	}
+
+	public GrupoPapel(Long id, String nome, String descricao) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
 	}
 
 	public Long getId() {
@@ -40,6 +51,14 @@ public class GrupoPapel {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public static List<String> getColunas() {
+		return Lists.newArrayList(COL_ID, COL_NOME, COL_DESCRICAO);
+	}
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_NOME, COL_DESCRICAO };
 	}
 
 }

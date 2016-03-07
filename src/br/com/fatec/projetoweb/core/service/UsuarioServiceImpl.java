@@ -6,6 +6,7 @@ import br.com.fatec.projetoweb.api.dao.UsuarioDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioGrupoDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioPapelDAO;
 import br.com.fatec.projetoweb.api.dto.UsuarioDTO;
+import br.com.fatec.projetoweb.api.entity.Usuario;
 import br.com.fatec.projetoweb.api.service.UsuarioService;
 import br.com.fatec.projetoweb.core.converter.GrupoPapelDTOConverter;
 import br.com.fatec.projetoweb.core.converter.PapelDTOConverter;
@@ -39,14 +40,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Long id = this.dao.save(this.converter.toEntity(usuario));
 		usuario.setId(id);
 		this.atualizarPapeisEGrupos(usuario);
-		return this.converter.toDTO(this.dao.findById(id));
+		return this.converter.toDTO(this.dao.findById(id), true);
 	}
 
 	@Override
 	public UsuarioDTO atualizar(UsuarioDTO usuario) {
 		this.dao.update(this.converter.toEntity(usuario));
 		this.atualizarPapeisEGrupos(usuario);
-		return this.converter.toDTO(this.dao.findById(usuario.getId()));
+		return this.converter.toDTO(this.dao.findById(usuario.getId()), true);
 	}
 
 	private void atualizarPapeisEGrupos(UsuarioDTO usuario) {
@@ -58,20 +59,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public void deletar(Long usuarioId) {
-		// TODO Auto-generated method stub
-
+		UsuarioDTO usuario = this.buscarPorId(usuarioId);
+		this.atualizarPapeisEGrupos(usuario);
+		this.dao.update(this.converter.toEntity(usuario));
 	}
 
 	@Override
 	public List<UsuarioDTO> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.converter.toDTOSimples(this.dao.findAll());
 	}
 
 	@Override
 	public UsuarioDTO buscarPorId(Long usuarioId) {
-		// TODO Auto-generated method stub
-		return null;
+		Usuario usuario = this.dao.findById(usuarioId);
+		return this.converter.toDTO(usuario);
 	}
 
 }

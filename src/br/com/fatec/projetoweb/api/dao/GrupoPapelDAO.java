@@ -17,4 +17,6 @@ public interface GrupoPapelDAO {
 
 	List<GrupoPapel> findAll();
 
+	List<GrupoPapel> findByIds(List<Long> ids);
+
 }

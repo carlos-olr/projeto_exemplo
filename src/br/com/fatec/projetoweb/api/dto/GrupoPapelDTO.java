@@ -30,4 +30,9 @@ public class GrupoPapelDTO {
 		this.descricao = descricao;
 	}
 
+	@Override
+	public String toString() {
+		return "Grupo[" + this.id + " - " + this.nome + "]";
+	}
+
 }

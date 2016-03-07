@@ -1,5 +1,7 @@
 package br.com.fatec.projetoweb.core.dao;
 
+import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +15,6 @@ import com.google.common.collect.Lists;
 import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
 import br.com.fatec.projetoweb.api.entity.GrupoPapel;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
-import br.com.spektro.minispring.core.query.GeradorIdService;
 
 public class GrupoPapelDAOImpl implements GrupoPapelDAO {
 
@@ -24,16 +25,29 @@ public class GrupoPapelDAOImpl implements GrupoPapelDAO {
 		PreparedStatement insert = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "INSERT INTO " + GrupoPapel.TABLE + " VALUES (?,?,?);";
-			insert = conn.prepareStatement(sql);
-			Long id = GeradorIdService.getNextId(GrupoPapel.TABLE);
 
-			insert.setLong(1, id);
-			insert.setString(2, grupo.getNome());
-			insert.setString(3, grupo.getDescricao());
-			insert.execute();
+			String colunas = DAOUtils.getColunas(
+					ConfigDBMapper.getDefaultConnectionType(), GrupoPapel.getColunas());
 
-			return id;
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(),
+					2, "SEQ_PROJETO_GRUPO_PAPEL");
+
+			String sql = "INSERT INTO " + GrupoPapel.TABLE + colunas + " VALUES "
+					+ values;
+
+			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(),
+					GrupoPapel.getColunasArray());
+
+			insert.setString(1, grupo.getNome());
+			insert.setString(2, grupo.getDescricao());
+			insert.executeUpdate();
+
+			ResultSet generatedKeys = insert.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				return generatedKeys.getLong(1);
+			}
+
+			return null;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -69,7 +83,7 @@ public class GrupoPapelDAOImpl implements GrupoPapelDAO {
 		PreparedStatement delete = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "DELETE FROM " + GrupoPapel.TABLE + " WHERE ID = ?;";
+			String sql = "DELETE FROM " + GrupoPapel.TABLE + " WHERE ID = ?";
 			delete = conn.prepareStatement(sql);
 			delete.setLong(1, id);
 			delete.execute();
@@ -89,7 +103,7 @@ public class GrupoPapelDAOImpl implements GrupoPapelDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			String sql = "SELECT * FROM " + GrupoPapel.TABLE + " WHERE "
-					+ GrupoPapel.COL_ID + " = ?;";
+					+ GrupoPapel.COL_ID + " = ?";
 			find = conn.prepareStatement(sql);
 			find.setLong(1, id);
 			ResultSet rs = find.executeQuery();
@@ -136,6 +150,31 @@ public class GrupoPapelDAOImpl implements GrupoPapelDAO {
 		grupo.setNome(rs.getString(GrupoPapel.COL_NOME));
 		grupo.setDescricao(rs.getString(GrupoPapel.COL_DESCRICAO));
 		return grupo;
+	}
+
+	@Override
+	public List<GrupoPapel> findByIds(List<Long> ids) {
+		List<GrupoPapel> grupos = Lists.newArrayList();
+		if (ids.size() > 0) {
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			try {
+				conn = ConfigDBMapper.getDefaultConnection();
+				String args = DAOUtils.preparePlaceHolders(ids.size());
+				String sql = "SELECT * FROM " + GrupoPapel.TABLE + " WHERE "
+						+ GrupoPapel.COL_ID + " IN (" + args + ")";
+				stmt = conn.prepareStatement(sql);
+				DAOUtils.setValues(stmt, ids);
+				ResultSet rs = stmt.executeQuery();
+				grupos = this.buildGrupoPapels(rs);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			} finally {
+				DbUtils.closeQuietly(conn);
+				DbUtils.closeQuietly(stmt);
+			}
+		}
+		return grupos;
 	}
 
 }

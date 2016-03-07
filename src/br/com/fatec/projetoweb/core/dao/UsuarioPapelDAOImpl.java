@@ -16,14 +16,13 @@ import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
 
 public class UsuarioPapelDAOImpl implements UsuarioPapelDAO {
 
-	private static final String TABLE = "PROJETO_TESTE_USUARIO_PAPEL";
+	private static final String TABLE = "PROJETO_USUARIO_PAPEL";
 	private static final String COL_ID_PAPEL = "ID_PAPEL";
 	private static final String COL_ID_USUARIO = "ID_USUARIO";
 
 	@Override
-
 	public void atualizarPapeis(Long usuarioId, List<Papel> papeis) {
-		if (papeis != null && !papeis.isEmpty()) {
+		if (papeis != null) {
 			papeis.removeAll(Collections.singleton(null));
 			Connection connection = ConfigDBMapper.getDefaultConnection();
 			PreparedStatement delete = null;
@@ -33,7 +32,6 @@ public class UsuarioPapelDAOImpl implements UsuarioPapelDAO {
 				delete = connection.prepareStatement(sqlD);
 				delete.setLong(1, usuarioId);
 				delete.execute();
-				delete.close();
 
 				for (Papel papel : papeis) {
 					String sqlI = "INSERT INTO " + TABLE + " VALUES (?,?)";

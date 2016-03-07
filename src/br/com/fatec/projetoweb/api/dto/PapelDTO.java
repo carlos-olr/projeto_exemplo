@@ -39,4 +39,8 @@ public class PapelDTO {
 		this.grupo = grupo;
 	}
 
+	@Override
+	public String toString() {
+		return "Papel[" + this.id + " - " + this.nome + "]";
+	}
 }

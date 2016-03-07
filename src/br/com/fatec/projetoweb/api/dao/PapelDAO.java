@@ -19,4 +19,6 @@ public interface PapelDAO {
 
 	List<Papel> findByIds(List<Long> ids);
 
+	List<Papel> findByGrupo(Long idGrupo);
+
 }
