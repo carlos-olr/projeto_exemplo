@@ -8,29 +8,29 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.dao.GrupoDAO;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.fatec.projetoweb.test.comum.TestBase;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
-public class GrupoPapelDAOTest extends TestBase {
+public class GrupoDAOTest extends TestBase {
 
-	private GrupoPapelDAO dao;
+	private GrupoDAO dao;
 
 	@Before
 	public void config() {
-		this.dao = ImplFinder.getImpl(GrupoPapelDAO.class);
+		this.dao = ImplFinder.getImpl(GrupoDAO.class);
 	}
 
 	@Test
 	public void testSave() {
-		GrupoPapel grupo_salvar = new GrupoPapel();
+		Grupo grupo_salvar = new Grupo();
 		grupo_salvar.setNome("grupo");
 		grupo_salvar.setDescricao("grupo de teste");
 
 		Long id = this.dao.save(grupo_salvar);
 
-		GrupoPapel grupo_salvo = this.dao.findById(id);
+		Grupo grupo_salvo = this.dao.findById(id);
 
 		Assert.assertNotNull(grupo_salvo);
 		Assert.assertEquals("grupo", grupo_salvo.getNome());
@@ -39,18 +39,18 @@ public class GrupoPapelDAOTest extends TestBase {
 
 	@Test
 	public void testUpdate() {
-		GrupoPapel grupo_salvar = new GrupoPapel();
+		Grupo grupo_salvar = new Grupo();
 		grupo_salvar.setNome("grupo 1");
 		grupo_salvar.setDescricao("grupo de teste");
 
 		Long id = this.dao.save(grupo_salvar);
-		GrupoPapel grupo_atualizar = this.dao.findById(id);
+		Grupo grupo_atualizar = this.dao.findById(id);
 
 		grupo_atualizar.setNome("grupo 1 modificado");
 		grupo_atualizar.setDescricao("grupo de teste modificado");
 
 		this.dao.update(grupo_atualizar);
-		GrupoPapel grupo_atualizado = this.dao.findById(id);
+		Grupo grupo_atualizado = this.dao.findById(id);
 
 		Assert.assertNotNull(grupo_atualizado);
 		Assert.assertEquals("grupo 1 modificado", grupo_atualizado.getNome());
@@ -59,31 +59,31 @@ public class GrupoPapelDAOTest extends TestBase {
 
 	@Test
 	public void testDelete() {
-		GrupoPapel grupo_salvar = new GrupoPapel();
+		Grupo grupo_salvar = new Grupo();
 		grupo_salvar.setNome("grupo");
 		grupo_salvar.setDescricao("grupo de teste");
 
 		Long id = this.dao.save(grupo_salvar);
 		this.dao.delete(id);
 
-		GrupoPapel grupo_deletado = this.dao.findById(id);
+		Grupo grupo_deletado = this.dao.findById(id);
 
 		Assert.assertNull(grupo_deletado);
 	}
 
 	@Test
 	public void testFindAll() {
-		GrupoPapel grupo1 = new GrupoPapel();
+		Grupo grupo1 = new Grupo();
 		grupo1.setNome("grupo 1");
 		grupo1.setDescricao("grupo de teste 1");
-		GrupoPapel grupo2 = new GrupoPapel();
+		Grupo grupo2 = new Grupo();
 		grupo2.setNome("grupo 2");
 		grupo2.setDescricao("grupo de teste 2");
 
 		this.dao.save(grupo1);
 		this.dao.save(grupo2);
 
-		List<GrupoPapel> encontrados = this.dao.findAll();
+		List<Grupo> encontrados = this.dao.findAll();
 
 		Assert.assertEquals(2, encontrados.size());
 		Assert.assertEquals("grupo 1", encontrados.get(0).getNome());

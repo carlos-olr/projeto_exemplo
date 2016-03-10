@@ -4,7 +4,7 @@ package br.com.fatec.projetoweb.test.comum;
 import org.junit.After;
 import org.junit.BeforeClass;
 
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.fatec.projetoweb.api.entity.Usuario;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
@@ -26,7 +26,7 @@ public class TestBase {
 		QueryExecutorService.executeQuery("DELETE FROM PROJETO_USUARIO_GRUPO_PAPEL");
 		QueryExecutorService.executeQuery("DELETE FROM PROJETO_USUARIO_PAPEL");
 		QueryExecutorService.executeQuery("DELETE FROM " + Papel.TABLE);
-		QueryExecutorService.executeQuery("DELETE FROM " + GrupoPapel.TABLE);
+		QueryExecutorService.executeQuery("DELETE FROM " + Grupo.TABLE);
 		QueryExecutorService.executeQuery("DELETE FROM " + Usuario.TABLE);
 
 		QueryExecutorService

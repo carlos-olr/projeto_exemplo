@@ -7,9 +7,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
+import br.com.fatec.projetoweb.api.dao.GrupoDAO;
 import br.com.fatec.projetoweb.api.dao.PapelDAO;
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.fatec.projetoweb.test.comum.TestBase;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
@@ -17,18 +17,18 @@ import br.com.spektro.minispring.core.implfinder.ImplFinder;
 public class PapelDAOTest extends TestBase {
 
 	private PapelDAO dao;
-	private GrupoPapelDAO grupoDao;
-	private GrupoPapel grupo1;
-	private GrupoPapel grupo2;
+	private GrupoDAO grupoDao;
+	private Grupo grupo1;
+	private Grupo grupo2;
 
 	@Before
 	public void config() {
 		this.dao = ImplFinder.getImpl(PapelDAO.class);
-		this.grupoDao = ImplFinder.getImpl(GrupoPapelDAO.class);
+		this.grupoDao = ImplFinder.getImpl(GrupoDAO.class);
 
-		GrupoPapel g1 = new GrupoPapel();
+		Grupo g1 = new Grupo();
 		g1.setNome("Grupo 1");
-		GrupoPapel g2 = new GrupoPapel();
+		Grupo g2 = new Grupo();
 		g2.setNome("Grupo 2");
 
 		Long id1 = this.grupoDao.save(g1);

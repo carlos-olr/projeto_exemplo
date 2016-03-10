@@ -9,21 +9,21 @@ import org.junit.Before;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
+import br.com.fatec.projetoweb.api.dao.GrupoDAO;
 import br.com.fatec.projetoweb.api.dao.PapelDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioGrupoDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioPapelDAO;
-import br.com.fatec.projetoweb.api.dto.GrupoPapelDTO;
+import br.com.fatec.projetoweb.api.dto.GrupoDTO;
 import br.com.fatec.projetoweb.api.dto.PapelDTO;
 import br.com.fatec.projetoweb.api.dto.UsuarioDTO;
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.fatec.projetoweb.api.entity.Usuario;
-import br.com.fatec.projetoweb.api.service.GrupoPapelService;
+import br.com.fatec.projetoweb.api.service.GrupoService;
 import br.com.fatec.projetoweb.api.service.PapelService;
 import br.com.fatec.projetoweb.api.service.UsuarioService;
-import br.com.fatec.projetoweb.core.converter.GrupoPapelDTOConverter;
+import br.com.fatec.projetoweb.core.converter.GrupoDTOConverter;
 import br.com.fatec.projetoweb.core.converter.PapelDTOConverter;
 import br.com.fatec.projetoweb.core.converter.UsuarioDTOConverter;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
@@ -32,23 +32,23 @@ public abstract class TestCenario extends TestBase {
 
 	protected UsuarioDAO usuarioDAO;
 	protected PapelDAO papelDAO;
-	protected GrupoPapelDAO grupoDAO;
+	protected GrupoDAO grupoDAO;
 	protected UsuarioGrupoDAO usuarioGrupoDAO;
 	protected UsuarioPapelDAO usuarioPapelDAO;
 
 	protected PapelDTOConverter papelConverter;
 	protected UsuarioDTOConverter usuarioConverter;
-	protected GrupoPapelDTOConverter grupoConverter;
+	protected GrupoDTOConverter grupoConverter;
 
 	protected UsuarioService usuarioService;
 	protected PapelService papelService;
-	protected GrupoPapelService grupoService;
+	protected GrupoService grupoService;
 
-	protected Map<Long, GrupoPapel> grupos = Maps.newHashMap();
+	protected Map<Long, Grupo> grupos = Maps.newHashMap();
 	protected Map<Long, Papel> papeis = Maps.newHashMap();
 	protected Map<Long, Usuario> usuarios = Maps.newHashMap();
 
-	protected Map<Long, GrupoPapelDTO> grupoDtos = Maps.newHashMap();
+	protected Map<Long, GrupoDTO> grupoDtos = Maps.newHashMap();
 	protected Map<Long, PapelDTO> papelDtos = Maps.newHashMap();
 	protected Map<Long, UsuarioDTO> usuarioDtos = Maps.newHashMap();
 
@@ -56,17 +56,17 @@ public abstract class TestCenario extends TestBase {
 	public void upCenario() {
 		this.papelDAO = ImplFinder.getImpl(PapelDAO.class);
 		this.usuarioDAO = ImplFinder.getImpl(UsuarioDAO.class);
-		this.grupoDAO = ImplFinder.getImpl(GrupoPapelDAO.class);
+		this.grupoDAO = ImplFinder.getImpl(GrupoDAO.class);
 		this.usuarioGrupoDAO = ImplFinder.getImpl(UsuarioGrupoDAO.class);
 		this.usuarioPapelDAO = ImplFinder.getImpl(UsuarioPapelDAO.class);
 
 		this.papelConverter = ImplFinder.getFinalImpl(PapelDTOConverter.class);
 		this.usuarioConverter = ImplFinder.getFinalImpl(UsuarioDTOConverter.class);
-		this.grupoConverter = ImplFinder.getFinalImpl(GrupoPapelDTOConverter.class);
+		this.grupoConverter = ImplFinder.getFinalImpl(GrupoDTOConverter.class);
 
 		this.papelService = ImplFinder.getImpl(PapelService.class);
 		this.usuarioService = ImplFinder.getImpl(UsuarioService.class);
-		this.grupoService = ImplFinder.getImpl(GrupoPapelService.class);
+		this.grupoService = ImplFinder.getImpl(GrupoService.class);
 
 		this.criarGrupos();
 		this.criarPapeis();
@@ -142,9 +142,9 @@ public abstract class TestCenario extends TestBase {
 	}
 
 	private void criarGrupos() {
-		GrupoPapel g1 = new GrupoPapel(null, "Contabilidade", "Acesso Contábil");
-		GrupoPapel g2 = new GrupoPapel(null, "Recursos Humanos", "Acesso ao RH");
-		GrupoPapel g3 = new GrupoPapel(null, "Informática", "Acesso TI");
+		Grupo g1 = new Grupo(null, "Contabilidade", "Acesso Contábil");
+		Grupo g2 = new Grupo(null, "Recursos Humanos", "Acesso ao RH");
+		Grupo g3 = new Grupo(null, "Informática", "Acesso TI");
 
 		Long g1Id = this.grupoDAO.save(g1);
 		this.grupos.put(g1Id, this.grupoDAO.findById(g1Id));
@@ -168,8 +168,8 @@ public abstract class TestCenario extends TestBase {
 		return papeis;
 	}
 
-	protected List<GrupoPapelDTO> getGrupos(Long... ids) {
-		List<GrupoPapelDTO> grupos = Lists.newArrayList();
+	protected List<GrupoDTO> getGrupos(Long... ids) {
+		List<GrupoDTO> grupos = Lists.newArrayList();
 		for (Long id : ids) {
 			grupos.add(this.grupoDtos.get(id));
 		}

@@ -14,19 +14,19 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
-import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
+import br.com.fatec.projetoweb.api.dao.GrupoDAO;
 import br.com.fatec.projetoweb.api.dao.PapelDAO;
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 public class PapelDAOImpl implements PapelDAO {
 
-	private GrupoPapelDAO grupoDao;
+	private GrupoDAO grupoDao;
 
 	public PapelDAOImpl() {
-		this.grupoDao = ImplFinder.getImpl(GrupoPapelDAO.class);
+		this.grupoDao = ImplFinder.getImpl(GrupoDAO.class);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class PapelDAOImpl implements PapelDAO {
 
 			insert.setString(1, papel.getNome());
 			insert.setString(2, papel.getDescricao());
-			GrupoPapel grupo = papel.getGrupo();
+			Grupo grupo = papel.getGrupo();
 			if (grupo != null) {
 				insert.setLong(3, papel.getGrupo().getId());
 			} else {

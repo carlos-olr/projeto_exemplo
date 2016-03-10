@@ -15,7 +15,7 @@ public class Papel {
 	private Long id;
 	private String nome;
 	private String descricao;
-	private GrupoPapel grupo;
+	private Grupo grupo;
 
 	public Papel() {
 	}
@@ -24,7 +24,7 @@ public class Papel {
 		this.id = id;
 	}
 
-	public Papel(Long id, String nome, String descricao, GrupoPapel grupo) {
+	public Papel(Long id, String nome, String descricao, Grupo grupo) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -55,11 +55,11 @@ public class Papel {
 		this.descricao = descricao;
 	}
 
-	public GrupoPapel getGrupo() {
+	public Grupo getGrupo() {
 		return this.grupo;
 	}
 
-	public void setGrupo(GrupoPapel grupo) {
+	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
 

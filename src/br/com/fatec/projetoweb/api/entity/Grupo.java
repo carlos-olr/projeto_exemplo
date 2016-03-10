@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-public class GrupoPapel {
+public class Grupo {
 
 	public static final String TABLE = "PROJETO_GRUPO_PAPEL";
 	public static final String COL_ID = "ID";
@@ -15,14 +15,14 @@ public class GrupoPapel {
 	private String nome;
 	private String descricao;
 
-	public GrupoPapel() {
+	public Grupo() {
 	}
 
-	public GrupoPapel(Long id) {
+	public Grupo(Long id) {
 		this.id = id;
 	}
 
-	public GrupoPapel(Long id, String nome, String descricao) {
+	public Grupo(Long id, String nome, String descricao) {
 		super();
 		this.id = id;
 		this.nome = nome;

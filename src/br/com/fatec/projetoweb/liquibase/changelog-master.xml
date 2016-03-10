@@ -108,14 +108,14 @@
 	
 	<changeSet id="011" author="carlos.oliveira">
 		<addForeignKeyConstraint
-			constraintName="FK_USUARIOGRUPOPAPEL_USUARIO"
+			constraintName="FK_USUARIOGrupo_USUARIO"
 			referencedTableName="PROJETO_USUARIO"
 			referencedColumnNames="ID" 
 			baseTableName="PROJETO_USUARIO_GRUPO_PAPEL"
 			baseColumnNames="ID_USUARIO" />
 			
 		<addForeignKeyConstraint
-			constraintName="FK_USUARIOGRUPOPAPEL_GRUPO"
+			constraintName="FK_USUARIOGrupo_GRUPO"
 			referencedTableName="PROJETO_GRUPO_PAPEL"
 			referencedColumnNames="ID" 
 			baseTableName="PROJETO_USUARIO_GRUPO_PAPEL"

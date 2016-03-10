@@ -5,25 +5,25 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import br.com.fatec.projetoweb.api.dto.PapelDTO;
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
 import br.com.spektro.minispring.dto.DTOConverter;
 
 public class PapelDTOConverter implements DTOConverter<Papel, PapelDTO> {
 
-	private GrupoPapelDTOConverter grupoPapelDTOConverter;
+	private GrupoDTOConverter GrupoDTOConverter;
 
 	public PapelDTOConverter() {
-		this.grupoPapelDTOConverter = ImplFinder
-				.getFinalImpl(GrupoPapelDTOConverter.class);
+		this.GrupoDTOConverter = ImplFinder
+				.getFinalImpl(GrupoDTOConverter.class);
 	}
 
 	@Override
 	public PapelDTO toDTO(Papel entidade) {
 		PapelDTO dto = this.toDTOSimples(entidade);
 		if (entidade.getGrupo() != null) {
-			dto.setGrupo(this.grupoPapelDTOConverter.toDTO(entidade.getGrupo()));
+			dto.setGrupo(this.GrupoDTOConverter.toDTO(entidade.getGrupo()));
 		}
 		return dto;
 	}
@@ -43,7 +43,7 @@ public class PapelDTOConverter implements DTOConverter<Papel, PapelDTO> {
 		entidade.setNome(dto.getNome());
 		entidade.setDescricao(dto.getDescricao());
 		if (dto.getGrupo() != null) {
-			entidade.setGrupo(new GrupoPapel(dto.getGrupo().getId()));
+			entidade.setGrupo(new Grupo(dto.getGrupo().getId()));
 		}
 		return entidade;
 	}

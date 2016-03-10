@@ -5,7 +5,7 @@ public class PapelDTO {
 	private Long id;
 	private String nome;
 	private String descricao;
-	private GrupoPapelDTO grupo;
+	private GrupoDTO grupo;
 
 	public Long getId() {
 		return this.id;
@@ -31,11 +31,11 @@ public class PapelDTO {
 		this.descricao = descricao;
 	}
 
-	public GrupoPapelDTO getGrupo() {
+	public GrupoDTO getGrupo() {
 		return this.grupo;
 	}
 
-	public void setGrupo(GrupoPapelDTO grupo) {
+	public void setGrupo(GrupoDTO grupo) {
 		this.grupo = grupo;
 	}
 

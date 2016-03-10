@@ -6,14 +6,14 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import br.com.fatec.projetoweb.api.dao.GrupoPapelDAO;
+import br.com.fatec.projetoweb.api.dao.GrupoDAO;
 import br.com.fatec.projetoweb.api.dao.PapelDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioGrupoDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioPapelDAO;
-import br.com.fatec.projetoweb.api.dto.GrupoPapelDTO;
+import br.com.fatec.projetoweb.api.dto.GrupoDTO;
 import br.com.fatec.projetoweb.api.dto.PapelDTO;
 import br.com.fatec.projetoweb.api.dto.UsuarioDTO;
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.fatec.projetoweb.api.entity.Papel;
 import br.com.fatec.projetoweb.api.entity.Usuario;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
@@ -23,17 +23,17 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 
 	private UsuarioPapelDAO usuarioPapelDAO;
 	private UsuarioGrupoDAO usuarioGrupoDAO;
-	private GrupoPapelDAO grupoPapelDAO;
+	private GrupoDAO GrupoDAO;
 	private PapelDAO papelDAO;
 	private PapelDTOConverter papelConverter;
-	private GrupoPapelDTOConverter grupoPapelConverter;
+	private GrupoDTOConverter GrupoConverter;
 
 	public UsuarioDTOConverter() {
 		this.usuarioPapelDAO = ImplFinder.getImpl(UsuarioPapelDAO.class);
 		this.usuarioGrupoDAO = ImplFinder.getImpl(UsuarioGrupoDAO.class);
 		this.papelConverter = ImplFinder.getFinalImpl(PapelDTOConverter.class);
-		this.grupoPapelConverter = ImplFinder.getFinalImpl(GrupoPapelDTOConverter.class);
-		this.grupoPapelDAO = ImplFinder.getFinalImpl(GrupoPapelDAO.class);
+		this.GrupoConverter = ImplFinder.getFinalImpl(GrupoDTOConverter.class);
+		this.GrupoDAO = ImplFinder.getFinalImpl(GrupoDAO.class);
 		this.papelDAO = ImplFinder.getFinalImpl(PapelDAO.class);
 	}
 
@@ -49,8 +49,8 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 			Long id = dto.getId();
 			if (id != null && conveterDependencias) {
 				List<Long> idsGrupos = this.usuarioGrupoDAO.buscarGrupos(id);
-				List<GrupoPapel> gruposE = this.grupoPapelDAO.findByIds(idsGrupos);
-				List<GrupoPapelDTO> gruposDtos = this.grupoPapelConverter.toDTO(gruposE);
+				List<Grupo> gruposE = this.GrupoDAO.findByIds(idsGrupos);
+				List<GrupoDTO> gruposDtos = this.GrupoConverter.toDTO(gruposE);
 
 				List<Long> idsPapeis = this.usuarioPapelDAO.buscarPapeis(id);
 				List<Papel> papeisE = this.papelDAO.findByIds(idsPapeis);

@@ -13,7 +13,7 @@ public class UsuarioDTO {
 	private String nome;
 	private String senha;
 	private List<PapelDTO> papeis = Lists.newArrayList();
-	private List<GrupoPapelDTO> grupos = Lists.newArrayList();
+	private List<GrupoDTO> grupos = Lists.newArrayList();
 	private Set<PapelDTO> papeisCompilados = Sets.newHashSet();
 	// flags
 	private Boolean isAdmin;
@@ -72,11 +72,11 @@ public class UsuarioDTO {
 		return this.isAdmin;
 	}
 
-	public List<GrupoPapelDTO> getGrupos() {
+	public List<GrupoDTO> getGrupos() {
 		return this.grupos;
 	}
 
-	public void setGrupos(List<GrupoPapelDTO> grupos) {
+	public void setGrupos(List<GrupoDTO> grupos) {
 		this.grupos = grupos;
 	}
 

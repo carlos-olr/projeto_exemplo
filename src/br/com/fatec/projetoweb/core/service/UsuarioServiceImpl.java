@@ -6,12 +6,12 @@ import java.util.List;
 import br.com.fatec.projetoweb.api.dao.UsuarioDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioGrupoDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioPapelDAO;
-import br.com.fatec.projetoweb.api.dto.GrupoPapelDTO;
+import br.com.fatec.projetoweb.api.dto.GrupoDTO;
 import br.com.fatec.projetoweb.api.dto.PapelDTO;
 import br.com.fatec.projetoweb.api.dto.UsuarioDTO;
 import br.com.fatec.projetoweb.api.entity.Usuario;
 import br.com.fatec.projetoweb.api.service.UsuarioService;
-import br.com.fatec.projetoweb.core.converter.GrupoPapelDTOConverter;
+import br.com.fatec.projetoweb.core.converter.GrupoDTOConverter;
 import br.com.fatec.projetoweb.core.converter.PapelDTOConverter;
 import br.com.fatec.projetoweb.core.converter.UsuarioDTOConverter;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
@@ -26,7 +26,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	// Converter
 	private UsuarioDTOConverter converter;
 	private PapelDTOConverter papelConverter;
-	private GrupoPapelDTOConverter grupoPapelConverter;
+	private GrupoDTOConverter GrupoConverter;
 
 	public UsuarioServiceImpl() {
 		this.dao = ImplFinder.getImpl(UsuarioDAO.class);
@@ -35,7 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		this.converter = ImplFinder.getFinalImpl(UsuarioDTOConverter.class);
 		this.papelConverter = ImplFinder.getFinalImpl(PapelDTOConverter.class);
-		this.grupoPapelConverter = ImplFinder.getFinalImpl(GrupoPapelDTOConverter.class);
+		this.GrupoConverter = ImplFinder.getFinalImpl(GrupoDTOConverter.class);
 	}
 
 	@Override
@@ -57,13 +57,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 		this.usuarioPapelDAO.atualizarPapeis(usuario.getId(),
 				this.papelConverter.toEntity(usuario.getPapeis()));
 		this.usuarioGrupoDAO.atualizarGrupos(usuario.getId(),
-				this.grupoPapelConverter.toEntity(usuario.getGrupos()));
+				this.GrupoConverter.toEntity(usuario.getGrupos()));
 	}
 
 	@Override
 	public void deletar(Long usuarioId) {
 		UsuarioDTO usuario = this.buscarPorId(usuarioId);
-		usuario.setGrupos(new ArrayList<GrupoPapelDTO>());
+		usuario.setGrupos(new ArrayList<GrupoDTO>());
 		usuario.setPapeis(new ArrayList<PapelDTO>());
 		this.atualizarPapeisEGrupos(usuario);
 		this.dao.delete(usuarioId);

@@ -1,6 +1,6 @@
 package br.com.fatec.projetoweb.api.dto;
 
-public class GrupoPapelDTO {
+public class GrupoDTO {
 
 	private Long id;
 	private String nome;

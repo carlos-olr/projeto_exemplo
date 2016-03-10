@@ -11,7 +11,7 @@ import org.apache.commons.dbutils.DbUtils;
 import com.google.common.collect.Lists;
 
 import br.com.fatec.projetoweb.api.dao.UsuarioGrupoDAO;
-import br.com.fatec.projetoweb.api.entity.GrupoPapel;
+import br.com.fatec.projetoweb.api.entity.Grupo;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
 
 public class UsuarioGrupoDAOImpl implements UsuarioGrupoDAO {
@@ -21,7 +21,7 @@ public class UsuarioGrupoDAOImpl implements UsuarioGrupoDAO {
 	private static final String COL_ID_USUARIO = "ID_USUARIO";
 
 	@Override
-	public void atualizarGrupos(Long usuarioId, List<GrupoPapel> grupos) {
+	public void atualizarGrupos(Long usuarioId, List<Grupo> grupos) {
 		if (grupos != null) {
 			grupos.removeAll(Collections.singleton(null));
 			Connection connection = ConfigDBMapper.getDefaultConnection();
@@ -35,7 +35,7 @@ public class UsuarioGrupoDAOImpl implements UsuarioGrupoDAO {
 				delete.execute();
 				delete.close();
 
-				for (GrupoPapel grupo : grupos) {
+				for (Grupo grupo : grupos) {
 					String sqlI = "INSERT INTO " + TABLE + " VALUES (?,?)";
 					insert = connection.prepareStatement(sqlI);
 					insert.setLong(1, usuarioId);
