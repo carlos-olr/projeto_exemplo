@@ -1,10 +1,13 @@
 package br.com.fatec.projetoweb.core.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fatec.projetoweb.api.dao.UsuarioDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioGrupoDAO;
 import br.com.fatec.projetoweb.api.dao.UsuarioPapelDAO;
+import br.com.fatec.projetoweb.api.dto.GrupoPapelDTO;
+import br.com.fatec.projetoweb.api.dto.PapelDTO;
 import br.com.fatec.projetoweb.api.dto.UsuarioDTO;
 import br.com.fatec.projetoweb.api.entity.Usuario;
 import br.com.fatec.projetoweb.api.service.UsuarioService;
@@ -60,8 +63,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public void deletar(Long usuarioId) {
 		UsuarioDTO usuario = this.buscarPorId(usuarioId);
+		usuario.setGrupos(new ArrayList<GrupoPapelDTO>());
+		usuario.setPapeis(new ArrayList<PapelDTO>());
 		this.atualizarPapeisEGrupos(usuario);
-		this.dao.update(this.converter.toEntity(usuario));
+		this.dao.delete(usuarioId);
 	}
 
 	@Override

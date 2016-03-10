@@ -82,9 +82,9 @@ public abstract class TestCenario extends TestBase {
 
 	// Criação de Cenários
 	private void criarUsuarios() {
-		Usuario u1 = new Usuario(1l, "Carlos", "blah1");
-		Usuario u2 = new Usuario(2l, "Augusto", "blah2");
-		Usuario u3 = new Usuario(3l, "Argemiro", "blah3");
+		Usuario u1 = new Usuario(null, "Carlos", "blah1");
+		Usuario u2 = new Usuario(null, "Augusto", "blah2");
+		Usuario u3 = new Usuario(null, "Argemiro", "blah3");
 
 		Long u1Id = this.usuarioDAO.save(u1);
 		this.usuarios.put(u1Id, this.usuarioDAO.findById(1l));
@@ -99,19 +99,19 @@ public abstract class TestCenario extends TestBase {
 	}
 
 	private void criarPapeis() {
-		Papel p1 = new Papel(1l, "ADMIN", "Administrador do Sistema", null);
-		Papel p2 = new Papel(2l, "CRUD_CONTAB", "Acessar Cadastros da Contabilidade",
+		Papel p1 = new Papel(null, "ADMIN", "Administrador do Sistema", null);
+		Papel p2 = new Papel(null, "CRUD_CONTAB", "Acessar Cadastros da Contabilidade",
 				this.grupos.get(1l));
-		Papel p3 = new Papel(3l, "CRUD_RH", "Acessar Cadastros do RH",
+		Papel p3 = new Papel(null, "CRUD_RH", "Acessar Cadastros do RH",
 				this.grupos.get(2l));
-		Papel p4 = new Papel(4l, "CRUD_TI", "Acessar Cadastros do TI",
+		Papel p4 = new Papel(null, "CRUD_TI", "Acessar Cadastros do TI",
 				this.grupos.get(3l));
-		Papel p5 = new Papel(5l, "REL_CONTAB", "Relatórios Contáveis",
+		Papel p5 = new Papel(null, "REL_CONTAB", "Relatórios Contáveis",
 				this.grupos.get(1l));
-		Papel p6 = new Papel(6l, "RH_DADOS_CRI", "Acessar dados críticos de RH",
+		Papel p6 = new Papel(null, "RH_DADOS_CRI", "Acessar dados críticos de RH",
 				this.grupos.get(2l));
-		Papel p7 = new Papel(7l, "REL_TI", "Relatórios da TI", this.grupos.get(3l));
-		Papel p8 = new Papel(8l, "REABRIR_CHAMADOS", "Pode Reabrir Chamados",
+		Papel p7 = new Papel(null, "REL_TI", "Relatórios da TI", this.grupos.get(3l));
+		Papel p8 = new Papel(null, "REABRIR_CHAMADOS", "Pode Reabrir Chamados",
 				this.grupos.get(3l));
 
 		Long p1Id = this.papelDAO.save(p1);
@@ -142,9 +142,9 @@ public abstract class TestCenario extends TestBase {
 	}
 
 	private void criarGrupos() {
-		GrupoPapel g1 = new GrupoPapel(1l, "Contabilidade", "Acesso Contábil");
-		GrupoPapel g2 = new GrupoPapel(2l, "Recursos Humanos", "Acesso ao RH");
-		GrupoPapel g3 = new GrupoPapel(3l, "Informática", "Acesso TI");
+		GrupoPapel g1 = new GrupoPapel(null, "Contabilidade", "Acesso Contábil");
+		GrupoPapel g2 = new GrupoPapel(null, "Recursos Humanos", "Acesso ao RH");
+		GrupoPapel g3 = new GrupoPapel(null, "Informática", "Acesso TI");
 
 		Long g1Id = this.grupoDAO.save(g1);
 		this.grupos.put(g1Id, this.grupoDAO.findById(g1Id));

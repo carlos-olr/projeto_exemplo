@@ -28,6 +28,14 @@ public class TestBase {
 		QueryExecutorService.executeQuery("DELETE FROM " + Papel.TABLE);
 		QueryExecutorService.executeQuery("DELETE FROM " + GrupoPapel.TABLE);
 		QueryExecutorService.executeQuery("DELETE FROM " + Usuario.TABLE);
+
+		QueryExecutorService
+				.executeQuery("ALTER SEQUENCE SEQ_PROJETO_PAPEL RESTART WITH 1");
+		QueryExecutorService
+				.executeQuery("ALTER SEQUENCE SEQ_PROJETO_GRUPO_PAPEL RESTART WITH 1");
+		QueryExecutorService
+				.executeQuery("ALTER SEQUENCE SEQ_PROJETO_USUARIO RESTART WITH 1");
+		;
 	}
 
 }

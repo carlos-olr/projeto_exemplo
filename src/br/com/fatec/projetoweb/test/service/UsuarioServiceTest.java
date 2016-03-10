@@ -1,6 +1,7 @@
 package br.com.fatec.projetoweb.test.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -65,17 +66,23 @@ public class UsuarioServiceTest extends TestCenario {
 
 	@Test
 	public void deletar() {
+		UsuarioDTO dto = this.usuarioDtos.get(1L);
+		dto.setPapeis(this.getPapeis(1l));
+		dto.setGrupos(this.getGrupos(2l, 3l));
 
+		UsuarioDTO salvo = this.usuarioService.salvar(dto);
+
+		this.usuarioService.deletar(salvo.getId());
 	}
 
 	@Test
 	public void listar() {
+		List<UsuarioDTO> usuarios = this.usuarioService.listar();
 
-	}
-
-	@Test
-	public void buscarPorId() {
-
+		Assert.assertEquals(3, usuarios.size());
+		Assert.assertEquals("Carlos", usuarios.get(0).getNome());
+		Assert.assertEquals("Augusto", usuarios.get(1).getNome());
+		Assert.assertEquals("Argemiro", usuarios.get(2).getNome());
 	}
 
 }
