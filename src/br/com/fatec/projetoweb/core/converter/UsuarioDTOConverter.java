@@ -21,10 +21,10 @@ import br.com.spektro.minispring.dto.DTOConverter;
 
 public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 
-	private UsuarioPapelDAO usuarioPapelDAO;
-	private UsuarioGrupoDAO usuarioGrupoDAO;
 	private GrupoDAO GrupoDAO;
 	private PapelDAO papelDAO;
+	private UsuarioPapelDAO usuarioPapelDAO;
+	private UsuarioGrupoDAO usuarioGrupoDAO;
 	private PapelDTOConverter papelConverter;
 	private GrupoDTOConverter GrupoConverter;
 
@@ -43,39 +43,59 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 	}
 
 	public UsuarioDTO toDTO(Usuario entidade, boolean conveterDependencias) {
-		UsuarioDTO dto = null;
-		if (entidade != null) {
-			dto = this.toDTOSimples(entidade);
-			Long id = dto.getId();
-			if (id != null && conveterDependencias) {
-				List<Long> idsGrupos = this.usuarioGrupoDAO.buscarGrupos(id);
-				List<Grupo> gruposE = this.GrupoDAO.findByIds(idsGrupos);
-				List<GrupoDTO> gruposDtos = this.GrupoConverter.toDTO(gruposE);
+		// A geração do DTO sempre inicia com a conversão simples
+		UsuarioDTO dto = this.toDTOSimples(entidade);
+		Long id = entidade.getId();
+		// A entidade possuir um 'ID' demostra que a mesma já está salva,
+		// e somente assim pode ter ligação com outras entidades
+		if (id != null && conveterDependencias) {
+			// Primeiro é gerado uma lista de todos os IDs de Grupos que possuem
+			// ligações com o Usuario
+			List<Long> idsGrupos = this.usuarioGrupoDAO.buscarGrupos(id);
+			// Em seguida é feita uma busca considerando todos os IDs passados
+			List<Grupo> gruposEntidade = this.GrupoDAO.findByIds(idsGrupos);
+			// A lista de entidades que possuem esses IDs é gerada e então
+			// convertida para uma lista de DTOs
+			List<GrupoDTO> gruposDTO = this.GrupoConverter.toDTO(gruposEntidade);
 
-				List<Long> idsPapeis = this.usuarioPapelDAO.buscarPapeis(id);
-				List<Papel> papeisE = this.papelDAO.findByIds(idsPapeis);
-				List<PapelDTO> papeisDtos = this.papelConverter.toDTOSimples(papeisE);
+			// O mesmo processo feio para os Grupos é feito para os Papéis
+			List<Long> idsPapeis = this.usuarioPapelDAO.buscarPapeis(id);
+			List<Papel> papeisEntidade = this.papelDAO.findByIds(idsPapeis);
+			List<PapelDTO> papeisDTO = this.papelConverter.toDTOSimples(papeisEntidade);
 
-				Set<PapelDTO> papeis = Sets.newLinkedHashSet();
-				papeis.addAll(papeisDtos);
-				for (Long idGrupo : idsGrupos) {
-					List<Papel> papeisGrupo = this.papelDAO.findByGrupo(idGrupo);
-					papeis.addAll(this.papelConverter.toDTOSimples(papeisGrupo));
-				}
-
-				dto.setGrupos(gruposDtos);
-				dto.setPapeis(papeisDtos);
-				dto.setPapeisCompilados(papeis);
+			// A classe Usuario DTO possui um atributo chamado 'papeisUsuario'
+			// que é uma compilação de todos os papeis ligados ao Usuario,
+			// diretamente e através de um Grupo. Essa compilação é gerada
+			// através do Set 'papeisUsuario'
+			Set<PapelDTO> papeisUsuario = Sets.newLinkedHashSet();
+			// Primeiro adicionamos todos os Papeis diretamente ligados ao Set
+			papeisUsuario.addAll(papeisDTO);
+			// Então é feito um LOOP para todos os Grupos ligados ao Usuario
+			for (Long idGrupo : idsGrupos) {
+				// Para cada Grupo é feita uma busca de Papeis que perteçam a
+				// este Grupo
+				List<Papel> papeisGrupo = this.papelDAO.findByGrupo(idGrupo);
+				// O retorno da busca é convertido em DTO e adicionado ao Set
+				papeisUsuario.addAll(this.papelConverter.toDTOSimples(papeisGrupo));
 			}
+
+			// E os atributos são "SETADOS"
+			dto.setGrupos(gruposDTO);
+			dto.setPapeis(papeisDTO);
+			dto.setPapeisUsuario(papeisUsuario);
+
+			// Por último é verificado se o Usuario possui a Role ADMIN
 			dto.setIsAdmin(dto.possuiPapel("ADMIN"));
 		}
 		return dto;
 	}
 
 	public UsuarioDTO toDTOSimples(Usuario entidade) {
+		// A conversão simples serve apenas converter os atributos básicos da
+		// Entidade, utilize esse sistema de conversão simples em casos em que
+		// o DTO possuir dependências para outros DTOs.
 		UsuarioDTO dto = new UsuarioDTO();
-		Long id = entidade.getId();
-		dto.setId(id);
+		dto.setId(entidade.getId());
 		dto.setNome(entidade.getNome());
 		dto.setSenha(entidade.getSenha());
 		return dto;
@@ -83,6 +103,9 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 
 	@Override
 	public Usuario toEntity(UsuarioDTO dto) {
+		// Na conversão sentido Entidade somente os atributos da Entidade ALVO
+		// são necessários. Se analisarmos a classe UsuarioDTO veremos muitos
+		// outros atributos que não dizem respeito a Entidade Usuario
 		Usuario entidade = new Usuario();
 		entidade.setId(dto.getId());
 		entidade.setNome(dto.getNome());
@@ -111,7 +134,7 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 	private List<UsuarioDTO> toDTO(List<Usuario> entidades, boolean isSimples) {
 		List<UsuarioDTO> dtos = Lists.newArrayList();
 		for (Usuario entidade : entidades) {
-			dtos.add(isSimples ? this.toDTOSimples(entidade) : this.toDTO(entidade));
+			dtos.add(this.toDTO(entidade, isSimples));
 		}
 		return dtos;
 	}

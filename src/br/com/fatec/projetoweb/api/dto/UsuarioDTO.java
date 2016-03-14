@@ -14,7 +14,7 @@ public class UsuarioDTO {
 	private String senha;
 	private List<PapelDTO> papeis = Lists.newArrayList();
 	private List<GrupoDTO> grupos = Lists.newArrayList();
-	private Set<PapelDTO> papeisCompilados = Sets.newHashSet();
+	private Set<PapelDTO> papeisUsuario = Sets.newHashSet();
 	// flags
 	private Boolean isAdmin;
 
@@ -29,7 +29,7 @@ public class UsuarioDTO {
 	}
 
 	public boolean possuiPapel(String nomePapel) {
-		for (PapelDTO papel : this.papeisCompilados) {
+		for (PapelDTO papel : this.getPapeisUsuario()) {
 			if (papel.getNome().equals(nomePapel))
 				return true;
 		}
@@ -80,14 +80,6 @@ public class UsuarioDTO {
 		this.grupos = grupos;
 	}
 
-	public Set<PapelDTO> getPapeisCompilados() {
-		return this.papeisCompilados;
-	}
-
-	public void setPapeisCompilados(Set<PapelDTO> papeisCompilados) {
-		this.papeisCompilados = papeisCompilados;
-	}
-
 	@Override
 	public String toString() {
 		return "Usuario[" + this.id + " - " + this.nome + "]";
@@ -95,5 +87,13 @@ public class UsuarioDTO {
 
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public Set<PapelDTO> getPapeisUsuario() {
+		return papeisUsuario;
+	}
+
+	public void setPapeisUsuario(Set<PapelDTO> papeisUsuario) {
+		this.papeisUsuario = papeisUsuario;
 	}
 }

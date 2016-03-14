@@ -21,7 +21,7 @@ public class UsuarioServiceTest extends TestCenario {
 		dto.setGrupos(this.getGrupos(2l, 3l));
 
 		UsuarioDTO salvo = this.usuarioService.salvar(dto);
-
+		salvo = this.usuarioService.buscarPorId(salvo.getId());
 		Assert.assertEquals(new Long(4), salvo.getId());
 		Assert.assertEquals("John", salvo.getNome());
 		Assert.assertEquals("Cena_WWE", salvo.getSenha());
@@ -34,16 +34,16 @@ public class UsuarioServiceTest extends TestCenario {
 		Assert.assertEquals(new Long(2), salvo.getGrupos().get(0).getId());
 		Assert.assertEquals(new Long(3), salvo.getGrupos().get(1).getId());
 
-		Assert.assertEquals(6, salvo.getPapeisCompilados().size());
-		ArrayList<PapelDTO> compilados = Lists.newArrayList(salvo.getPapeisCompilados());
-		Assert.assertEquals(new Long(1), compilados.get(0).getId());
+		Assert.assertEquals(6, salvo.getPapeisUsuario().size());
+		ArrayList<PapelDTO> papeisUsuario = Lists.newArrayList(salvo.getPapeisUsuario());
+		Assert.assertEquals(new Long(1), papeisUsuario.get(0).getId());
 		// papeis grupos 2
-		Assert.assertEquals(new Long(3), compilados.get(1).getId());
-		Assert.assertEquals(new Long(6), compilados.get(2).getId());
+		Assert.assertEquals(new Long(3), papeisUsuario.get(1).getId());
+		Assert.assertEquals(new Long(6), papeisUsuario.get(2).getId());
 		// papeis grupos 3
-		Assert.assertEquals(new Long(4), compilados.get(3).getId());
-		Assert.assertEquals(new Long(7), compilados.get(4).getId());
-		Assert.assertEquals(new Long(8), compilados.get(5).getId());
+		Assert.assertEquals(new Long(4), papeisUsuario.get(3).getId());
+		Assert.assertEquals(new Long(7), papeisUsuario.get(4).getId());
+		Assert.assertEquals(new Long(8), papeisUsuario.get(5).getId());
 	}
 
 	@Test
@@ -55,12 +55,13 @@ public class UsuarioServiceTest extends TestCenario {
 		dto.setPapeis(this.getPapeis(3l));
 		dto.setGrupos(this.getGrupos(1l));
 
-		UsuarioDTO atualizado = this.usuarioService.atualizar(dto);
+		this.usuarioService.atualizar(dto);
+		dto = this.usuarioService.buscarPorId(dto.getId());
 
-		Assert.assertEquals(new Long(1), atualizado.getId());
-		Assert.assertEquals("Carlos Augusto", atualizado.getNome());
-		Assert.assertEquals("blahblah", atualizado.getSenha());
-		Assert.assertFalse(atualizado.getIsAdmin());
+		Assert.assertEquals(new Long(1), dto.getId());
+		Assert.assertEquals("Carlos Augusto", dto.getNome());
+		Assert.assertEquals("blahblah", dto.getSenha());
+		Assert.assertFalse(dto.getIsAdmin());
 
 	}
 

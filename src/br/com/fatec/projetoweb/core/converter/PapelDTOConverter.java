@@ -15,8 +15,7 @@ public class PapelDTOConverter implements DTOConverter<Papel, PapelDTO> {
 	private GrupoDTOConverter GrupoDTOConverter;
 
 	public PapelDTOConverter() {
-		this.GrupoDTOConverter = ImplFinder
-				.getFinalImpl(GrupoDTOConverter.class);
+		this.GrupoDTOConverter = ImplFinder.getFinalImpl(GrupoDTOConverter.class);
 	}
 
 	@Override

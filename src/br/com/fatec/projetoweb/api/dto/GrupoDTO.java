@@ -6,6 +6,17 @@ public class GrupoDTO {
 	private String nome;
 	private String descricao;
 
+	public GrupoDTO() {
+
+	}
+
+	public GrupoDTO(Long id, String nome, String descricao) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+	}
+
 	public Long getId() {
 		return this.id;
 	}

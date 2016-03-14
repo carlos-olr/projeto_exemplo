@@ -8,7 +8,7 @@ public interface UsuarioService {
 
 	UsuarioDTO salvar(UsuarioDTO usuario);
 
-	UsuarioDTO atualizar(UsuarioDTO usuario);
+	void atualizar(UsuarioDTO usuario);
 
 	void deletar(Long usuarioId);
 
