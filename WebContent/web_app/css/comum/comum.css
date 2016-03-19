@@ -1,0 +1,22 @@
+div.conteudo {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.semRegistros {
+	text-align: center;
+}
+
+ul.pagination {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#tabelaAngular {
+    margin-bottom: 0px;
+}
+
+.btn.focus, .btn:focus {
+	outline: none;
+}
