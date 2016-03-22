@@ -12,6 +12,7 @@ public class UsuarioDTO {
 	private Long id;
 	private String nome;
 	private String senha;
+	private String login;
 	private List<PapelDTO> papeis = Lists.newArrayList();
 	private List<GrupoDTO> grupos = Lists.newArrayList();
 	private Set<PapelDTO> papeisUsuario = Sets.newHashSet();
@@ -22,10 +23,11 @@ public class UsuarioDTO {
 
 	}
 
-	public UsuarioDTO(Long id, String nome, String senha) {
+	public UsuarioDTO(Long id, String nome, String senha, String login) {
 		this.id = id;
 		this.nome = nome;
 		this.senha = senha;
+		this.login = login;
 	}
 
 	public boolean possuiPapel(String nomePapel) {
@@ -89,8 +91,16 @@ public class UsuarioDTO {
 		this.isAdmin = isAdmin;
 	}
 
+	public String getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public Set<PapelDTO> getPapeisUsuario() {
-		return papeisUsuario;
+		return this.papeisUsuario;
 	}
 
 	public void setPapeisUsuario(Set<PapelDTO> papeisUsuario) {

@@ -1,12 +1,11 @@
 
 package br.com.fatec.projetoweb.test.dao;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import br.com.fatec.projetoweb.api.dao.UsuarioDAO;
 import br.com.fatec.projetoweb.api.entity.Usuario;
@@ -32,6 +31,7 @@ public class UsuarioDAOTest extends TestBase {
 		Usuario usu_salvar = new Usuario();
 		usu_salvar.setNome("carlos");
 		usu_salvar.setSenha("senha_carlos");
+		usu_salvar.setLogin("carlosolr");
 
 		Long id = this.dao.save(usu_salvar);
 
@@ -40,6 +40,7 @@ public class UsuarioDAOTest extends TestBase {
 		Assert.assertNotNull(usu_salvo);
 		Assert.assertEquals("carlos", usu_salvo.getNome());
 		Assert.assertEquals("senha_carlos", usu_salvo.getSenha());
+		Assert.assertEquals("carlosolr", usu_salvo.getLogin());
 	}
 
 	@Test

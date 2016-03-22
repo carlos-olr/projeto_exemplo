@@ -16,7 +16,7 @@ public class UsuarioServiceTest extends TestCenario {
 
 	@Test
 	public void salvar() {
-		UsuarioDTO dto = new UsuarioDTO(null, "John", "Cena_WWE");
+		UsuarioDTO dto = new UsuarioDTO(null, "John", "Cena_WWE", "jcena");
 		dto.setPapeis(this.getPapeis(1l));
 		dto.setGrupos(this.getGrupos(2l, 3l));
 
@@ -25,6 +25,7 @@ public class UsuarioServiceTest extends TestCenario {
 		Assert.assertEquals(new Long(4), salvo.getId());
 		Assert.assertEquals("John", salvo.getNome());
 		Assert.assertEquals("Cena_WWE", salvo.getSenha());
+		Assert.assertEquals("jcena", salvo.getLogin());
 		Assert.assertTrue(salvo.getIsAdmin());
 
 		Assert.assertEquals(1, salvo.getPapeis().size());

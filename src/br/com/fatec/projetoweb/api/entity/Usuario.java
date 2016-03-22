@@ -10,19 +10,22 @@ public class Usuario {
 	public static final String COL_ID = "ID";
 	public static final String COL_NOME = "NOME";
 	public static final String COL_SENHA = "SENHA";
+	public static final String COL_LOGIN = "LOGIN";
 
 	private Long id;
 	private String nome;
 	private String senha;
+	private String login;
 
 	public Usuario() {
 
 	}
 
-	public Usuario(Long id, String nome, String senha) {
+	public Usuario(Long id, String nome, String senha, String login) {
 		this.id = id;
 		this.nome = nome;
 		this.senha = senha;
+		this.login = login;
 	}
 
 	public Long getId() {
@@ -49,12 +52,20 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	public String getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public static List<String> getColunas() {
-		return Lists.newArrayList(COL_ID, COL_NOME, COL_SENHA);
+		return Lists.newArrayList(COL_ID, COL_NOME, COL_SENHA, COL_LOGIN);
 	}
 
 	public static String[] getColunasArray() {
-		return new String[] { COL_ID, COL_NOME, COL_SENHA };
+		return new String[] { COL_ID, COL_NOME, COL_SENHA, COL_LOGIN };
 	}
 
 }

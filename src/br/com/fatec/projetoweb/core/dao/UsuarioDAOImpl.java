@@ -29,7 +29,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					Usuario.getColunas());
 
 			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(),
-					2, "SEQ_PROJETO_USUARIO");
+					Usuario.getColunas().size() - 1, "SEQ_PROJETO_USUARIO");
 
 			String sql = "INSERT INTO " + Usuario.TABLE + colunas + " VALUES " + values;
 
@@ -38,6 +38,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			insert.setString(1, usuario.getNome());
 			insert.setString(2, usuario.getSenha());
+			insert.setString(3, usuario.getLogin());
 			insert.execute();
 
 			ResultSet generatedKeys = insert.getGeneratedKeys();
@@ -61,11 +62,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			update = conn.prepareStatement("UPDATE " + Usuario.TABLE + " SET "
-					+ Usuario.COL_NOME + " = ?, " + Usuario.COL_SENHA + " = ? "
-					+ " WHERE " + Usuario.COL_ID + " = ?");
+					+ Usuario.COL_NOME + " = ?, " + Usuario.COL_SENHA + " = ?, "
+					+ Usuario.COL_LOGIN + " = ? " + " WHERE " + Usuario.COL_ID + " = ?");
 			update.setString(1, usuario.getNome());
 			update.setString(2, usuario.getSenha());
-			update.setLong(3, usuario.getId());
+			update.setString(3, usuario.getLogin());
+			update.setLong(4, usuario.getId());
 			update.execute();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -147,7 +149,33 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		usuario.setId(rs.getLong(Usuario.COL_ID));
 		usuario.setNome(rs.getString(Usuario.COL_NOME));
 		usuario.setSenha(rs.getString(Usuario.COL_SENHA));
+		usuario.setLogin(rs.getString(Usuario.COL_LOGIN));
 		return usuario;
+	}
+
+	@Override
+	public Usuario findByLoginAndPassword(String login, String senha) {
+		Connection conn = null;
+		PreparedStatement find = null;
+		Usuario user = null;
+		try {
+			conn = ConfigDBMapper.getDefaultConnection();
+			String sql = "SELECT * FROM " + Usuario.TABLE + " WHERE " + Usuario.COL_LOGIN
+					+ " = ? AND " + Usuario.COL_SENHA + " = ?";
+			find = conn.prepareStatement(sql);
+			find.setString(1, login);
+			find.setString(2, senha);
+			ResultSet rs = find.executeQuery();
+			if (rs.next()) {
+				user = this.buildUsuario(rs);
+			}
+			return user;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			DbUtils.closeQuietly(conn);
+			DbUtils.closeQuietly(find);
+		}
 	}
 
 }

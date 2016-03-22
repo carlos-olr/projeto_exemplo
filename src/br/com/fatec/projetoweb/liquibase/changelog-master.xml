@@ -122,4 +122,10 @@
 			baseColumnNames="ID_GRUPO_PAPEL" />
 	</changeSet>
 	
+	<changeSet id="012" author="carlos.oliveira">
+		<addColumn tableName="PROJETO_USUARIO">
+			<column name="LOGIN" type="VARCHAR(50)" />
+		</addColumn>
+	</changeSet>
+	
 </databaseChangeLog>

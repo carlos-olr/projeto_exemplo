@@ -1,10 +1,14 @@
 package br.com.fatec.projetoweb.web.context;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.com.fatec.projetoweb.api.dto.GrupoDTO;
 
-public class ContextoGrupo {
+public class ContextoGrupo implements Serializable {
+
+	/** */
+	private static final long serialVersionUID = -4946584307036887149L;
 
 	private GrupoDTO grupo;
 	private List<GrupoDTO> grupos;

@@ -116,4 +116,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return this.usuarioConverter.toDTO(usuario);
 	}
 
+	@Override
+	public UsuarioDTO buscarPorLoginESenha(String login, String senha) {
+		Usuario usuario = this.usuarioDAO.findByLoginAndPassword(login, senha);
+		UsuarioDTO dto = null;
+		if (usuario != null) {
+			dto = this.usuarioConverter.toDTOSimples(usuario);
+		}
+		return dto;
+	}
+
 }

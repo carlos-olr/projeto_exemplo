@@ -98,6 +98,7 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 		dto.setId(entidade.getId());
 		dto.setNome(entidade.getNome());
 		dto.setSenha(entidade.getSenha());
+		dto.setLogin(entidade.getLogin());
 		return dto;
 	}
 
@@ -110,6 +111,7 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 		entidade.setId(dto.getId());
 		entidade.setNome(dto.getNome());
 		entidade.setSenha(dto.getSenha());
+		entidade.setLogin(dto.getLogin());
 		return entidade;
 	}
 

@@ -82,9 +82,9 @@ public abstract class TestCenario extends TestBase {
 
 	// Criação de Cenários
 	private void criarUsuarios() {
-		Usuario u1 = new Usuario(null, "Carlos", "blah1");
-		Usuario u2 = new Usuario(null, "Augusto", "blah2");
-		Usuario u3 = new Usuario(null, "Argemiro", "blah3");
+		Usuario u1 = new Usuario(null, "Carlos", "blah1", "blah1");
+		Usuario u2 = new Usuario(null, "Augusto", "blah2", "blah2");
+		Usuario u3 = new Usuario(null, "Argemiro", "blah3", "blah3");
 
 		Long u1Id = this.usuarioDAO.save(u1);
 		this.usuarios.put(u1Id, this.usuarioDAO.findById(1l));

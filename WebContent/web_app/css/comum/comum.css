@@ -20,3 +20,15 @@ ul.pagination {
 .btn.focus, .btn:focus {
 	outline: none;
 }
+
+.modal-footer button.btn {
+    float: left;
+}
+
+td.btnCell {
+	width: 57px;
+}
+
+td.btnCell p {
+    margin-bottom: 0px !important;
+}

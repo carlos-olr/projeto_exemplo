@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" ></link>
 <link rel="stylesheet" href="../css/grupo/grupo.css" ></link>
 </head>
-<body ng-app="fatec">
+<body ng-app="fatec" ng-controller="LoginController">
 	<nav class="navbar navbar-default">
            <div class="container-fluid">
            	<div>
@@ -22,7 +22,7 @@
            	</div>
            </div>
 	</nav>
-	<div ng-controller="grupoCtrl" ng-cloak="true" class="conteudo">
+	<div ng-controller="GrupoController" ng-cloak="true" class="conteudo">
 		<div id="tabela" class="tab-pane fade in active" ><br/>
 			<table id="tabelaAngular" class="table table-striped table-bordered table-responsive" 
 				cellspacing="0" width="100%" at-table at-paginated at-list="grupos" at-config="config">
@@ -30,6 +30,8 @@
 					<th>ID</th>
 					<th>Nome</th>
 					<th>Descrição</th>
+					<th colspan="2">
+					</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="g in grupos.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"
@@ -37,6 +39,20 @@
 						<td at-implicit at-sortable>{{ g.id }}</td>
 						<td at-implicit at-sortable>{{ g.nome }}</td>
 						<td at-implicit at-sortable>{{ g.descricao }}</td>
+						<td class="btnCell">
+							<p>
+								<a ng-click="abrirModal(g.id)" href="#" class="btn btn-danger btn-small">
+									<span class="glyphicon glyphicon-edit" title="Atualizar"></span>
+								</a>
+							</p>
+						</td>
+						<td class="btnCell">
+							<p>
+								<a ng-click="deletar(g.id)" href="#" class="btn btn-danger btn-small">
+									<span class="glyphicon glyphicon-remove" title="Deletar"></span>
+								</a>
+							</p>
+						</td>
 					</tr>
 					<tr ng-if="grupos.length == 0">
 						<td colspan="3" class="semRegistros">
@@ -49,13 +65,45 @@
 			items-per-page="itemsPerPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" 
 			first-text="&laquo;" last-text="&raquo;" ng-change="pageChange()"></uib-pagination>
 			<br/>
-			<button type="button" class="btn btn-primary">Criar</button>
+			<button type="button" class="btn btn-primary" ng-click="abrirModal()">Criar</button>
+			<div>
+				<div class="modal fade" id="modalForm" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4>Cadastro de Grupo</h4>
+							</div>
+							<div class="modal-body">
+								<form role="form">
+									<div class="form-group">
+										<label for="nome">Nome:</label>
+										<input type="text" class="form-control" ng-model="grupo.nome">
+									</div>
+									<div class="form-group">
+										<label for="pwd">Descrição:</label>
+										<input type="text" class="form-control" ng-model="grupo.descricao">
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" 
+									ng-click="cancelarModal()">Cancelar</button>
+								<button type="button" class="btn btn-success" 
+									ng-click="salvar()">Salvar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="../js/angular.min.js"></script>
-	<script type="text/javascript" src="../js/grupo/grupo.js"></script>
+	<script type="text/javascript" src="../js/angular-cookies.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/ui-bootstrap.js"></script>
+	<script type="text/javascript" src="../js/comum/comum.js"></script>
+	<script type="text/javascript" src="../js/login/login.js"></script>
+	<script type="text/javascript" src="../js/grupo/grupo.js"></script>
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

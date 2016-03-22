@@ -17,4 +17,6 @@ public interface UsuarioDAO {
 
 	List<Usuario> findAll();
 
+	Usuario findByLoginAndPassword(String login, String senha);
+
 }

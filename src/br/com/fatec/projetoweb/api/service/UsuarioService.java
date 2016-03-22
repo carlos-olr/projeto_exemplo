@@ -16,4 +16,6 @@ public interface UsuarioService {
 
 	UsuarioDTO buscarPorId(Long usuarioId);
 
+	UsuarioDTO buscarPorLoginESenha(String login, String senha);
+
 }

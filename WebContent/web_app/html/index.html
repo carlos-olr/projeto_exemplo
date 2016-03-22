@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Usuários</title>
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" ></link>
+<link rel="stylesheet" href="../css/login/login.css" ></link>
+</head>
+<body ng-app="fatec" >
+	<div ng-controller="LoginController">
+		<nav class="navbar navbar-default" ng-if="isLogado">
+	           <div class="container-fluid">
+	           	<div>
+	           		<ul class="nav navbar-nav">
+						<li>
+							<a href="../../angular-api/cliente/list.html">Usuários</a>
+						</li>
+						<li>
+	                       	<a href="../../angular-api/materiaPrima/list.html">Papéis</a>
+						</li>
+						<li class="active">
+	                       	<a href="../../angular-api/Produto/list.html">Grupos</a>
+	                   	</li>
+	           		</ul>
+	           	</div>
+	           </div>
+		</nav>
+		<div ng-if="!isLogado">
+			<form role="form" class="formLogin">
+				<div class="form-group">
+					<label for="nome">Usuário:</label>
+					<input type="text" class="form-control" ng-model="usuario.login">
+				</div>
+				<div class="form-group">
+					<label for="pwd">Senha:</label>
+					<input type="password" class="form-control" ng-model="usuario.senha">
+				</div>
+				<button type="button" class="btn btn-primary" ng-click="doLogin()">Login</button>
+			</form>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="../js/angular.min.js"></script>
+	<script type="text/javascript" src="../js/angular-cookies.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/ui-bootstrap.js"></script>
+	<script type="text/javascript" src="../js/comum/comum.js"></script>
+	<script type="text/javascript" src="../js/login/login.js"></script>
+	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
