@@ -1,0 +1,39 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" ></link>
+	<link rel="stylesheet" href="../css/login/login.css" ></link>
+</head>
+<body>
+
+	<nav class="navbar navbar-default" ng-if="isLogado">
+		<div class="container-fluid">
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="usuario.html">Usuários</a>
+				</li>
+				<li>
+					<a href="papel.html">Papéis</a>
+				</li>
+				<li class="{{isAtivo('grupo')}}">
+					<a href="grupo.html">Grupos</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><p class="navbar-text">{{getMensagemApresentacao()}}</p></li>
+				<li>
+					<button type="button" class="btn btn-primary logoutBtn" ng-click="doLogout()">Sair</button>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<script type="text/javascript" src="../js/angular.min.js"></script>
+	<script type="text/javascript" src="../js/angular-cookies.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/ui-bootstrap.js"></script>
+	<script type="text/javascript" src="../js/comum/comum.js"></script>
+	<script type="text/javascript" src="../js/login/login.js"></script>
+	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

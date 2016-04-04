@@ -1,5 +1,7 @@
 package br.com.fatec.projetoweb.web.action;
 
+import java.util.Date;
+
 import br.com.fatec.projetoweb.api.dto.UsuarioDTO;
 import br.com.fatec.projetoweb.api.service.UsuarioService;
 import br.com.fatec.projetoweb.web.context.ContextoLogin;
@@ -17,12 +19,22 @@ public class LoginAction extends ProjetoWebAction {
 		this.service = ImplFinder.getImpl(UsuarioService.class);
 	}
 
-	public String doLogin() {
+	public String login() {
 		UsuarioDTO usuario = this.contexto.getUsuario();
 		UsuarioDTO usuarioEncontrado = this.service
 				.buscarPorLoginESenha(usuario.getLogin(), usuario.getSenha());
-		this.contexto.setUsuario(usuarioEncontrado);
-		this.getSession().put("usuario", usuarioEncontrado);
+
+		if (usuarioEncontrado != null) {
+			usuarioEncontrado.setStartSession(new Date().getTime());
+			this.contexto.setUsuario(usuarioEncontrado);
+			this.getSession().put("usuario", usuarioEncontrado);
+		}
+		return SUCCESS;
+	}
+
+	public String logout() {
+		this.contexto.setUsuario(null);
+		this.getSession().remove("usuario");
 		return SUCCESS;
 	}
 

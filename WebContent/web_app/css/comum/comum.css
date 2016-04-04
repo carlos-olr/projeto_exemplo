@@ -32,3 +32,8 @@ td.btnCell {
 td.btnCell p {
     margin-bottom: 0px !important;
 }
+
+.logoutBtn {
+    margin-top: 6px;
+    margin-right: 6px;
+}

@@ -15,7 +15,21 @@ var StorageHelper = (function(){
 	SH.getItem = function(chave, valor) {
 		return angular.fromJson(window.localStorage.getItem('usuario'));
 	};
+	
+	SH.removeItem = function(chave) {
+		window.localStorage.removeItem(chave);
+	}
 
 	return SH;
+
+})();
+
+var TelaHelper = (function(){
+	
+	var TH = {};
+	
+	TH.tela = '';
+
+	return TH;
 
 })();

@@ -13,6 +13,10 @@
 			<interceptor name="cookie" class="org.apache.struts2.interceptor.CookieInterceptor"/>
 			<interceptor name="cookieProvider" class="org.apache.struts2.interceptor.CookieProviderInterceptor"/>
 		</interceptors>
+		<action name="Test!*" class="br.com.fatec.projetoweb.web.action.TestAction"
+			method="{1}">
+			<result name="success" type="json" />
+		</action>
 		<action name="*!*" class="br.com.fatec.projetoweb.web.action.{1}Action"
 			method="{2}">
 			<interceptor-ref name="cookie"></interceptor-ref>

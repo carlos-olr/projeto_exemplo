@@ -1,8 +1,9 @@
 var app = angular.module('fatec');
-var urlPath = "http://localhost:8585/projeto_exemplo/Grupo!";
 
 app.controller('GrupoController', function($scope, $http, $timeout) {
 
+	var urlPath = "http://localhost:8585/projeto_exemplo/Grupo!";
+	TelaHelper.tela = 'grupo';
 	$scope.grupos = [];
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 5

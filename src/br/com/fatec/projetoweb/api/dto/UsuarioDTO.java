@@ -18,6 +18,7 @@ public class UsuarioDTO {
 	private Set<PapelDTO> papeisUsuario = Sets.newHashSet();
 	// flags
 	private Boolean isAdmin;
+	private Long startSession;
 
 	public UsuarioDTO() {
 
@@ -105,5 +106,13 @@ public class UsuarioDTO {
 
 	public void setPapeisUsuario(Set<PapelDTO> papeisUsuario) {
 		this.papeisUsuario = papeisUsuario;
+	}
+
+	public Long getStartSession() {
+		return startSession;
+	}
+
+	public void setStartSession(Long startSession) {
+		this.startSession = startSession;
 	}
 }
