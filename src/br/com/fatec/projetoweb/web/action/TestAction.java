@@ -15,7 +15,7 @@ public class TestAction extends ActionSupport {
 	public String blah() {
 		this.papel = new PapelDTO(1l, "papel", "descricao papel",
 				new GrupoDTO(1l, "grupo", "desc grupo"));
-		return SUCCESS;
+		return "jsp";
 	}
 
 	public PapelDTO getPapel() {
