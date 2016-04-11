@@ -1,29 +1,60 @@
+// Para criarmos um controlador precisamos definir a qual módulo ele fará parte.
+// Executar 'angular.module('NOME_MODULO')' sem passar um array é forma de fazer GET
+// do módulo.
 var app = angular.module('fatec');
 
-app.controller('LoginController', ['$scope', '$http', '$timeout', '$cookies', '$sce',
-                                   function($scope, $http, $timeout, $cookies, $sce) {
+// Para criarmos um Controlador executamos a função 'controller' a partir do módulo
+// Um controller pode possuir depedências, que são outros controllers ou serviços angular
+// o padrão de um controller é:
+// app.controller('NOME_CONTROLLER', ['$scope', function($scope) {}]);
+app.controller('LoginController', ['$scope', '$http', '$timeout', '$sce',
+                                   function($scope, $http, $timeout, $sce) {
+
+	// por padrão defininos variáveis contantes no início do arquivo
 	var CHAVE_STORAGE = 'usuario';
 	var urlPath = "http://localhost:8585/projeto_exemplo/Login!";
+
+	// O $scope é um objeto público que permite o HTML ter acesso ao Controller,
+	// tudo que é declarado no scope pode ser usado na tela.
+	// representa o usuário logado
 	$scope.usuario = {};
+	// Flag para avisar se existe usuário logado
 	$scope.isLogado = false;
+	// flag para exibir mensagem de erro na tela
 	$scope.exibirMensagemErro = false;
 	
+	// Função que verifica se o código da tela que foi aberta é a mesmo que foi
+	// passado como argumento, nesse caso devolve a palavra 'active'
 	$scope.isAtivo = function(tela) {
 		return TelaHelper.tela == tela ? 'active' : '';
 	};
 	
+	// função que realiza o login no sistema
 	$scope.doLogin = function() {
+		// primeiro criamos uma variável data que possui um atributo contexto,
+		// este é um objeto que possui um atributo 'usuario' que reebe o usuario
+		// que está no scope da controller.
 		var data = {contexto : {
 			usuario : $scope.usuario
 		}};
 		
+		// JSON é um objeto nativo do JavaScript e serve para converter variaveis
+		// de Object para uma String e o contrário também.
 		var data1 = JSON.stringify(data);
+		// AJAX (Asynchronous JavaScript e XML) é a forma como requisições são feitas
+		// em javascript, aqui usamos o ajax do jquery (http://api.jquery.com/jquery.ajax/)
 		jQuery.ajax({
+			// variável urlPath definida na linha 15
 		    url: urlPath + 'login.action',
+		    // atributo onde passamos os parâmetros da requisição 
 		    data: data1,
+		    // definição do tipo dos dados
 		    dataType: 'json',
+		    // definição do tipo de retorno
 		    contentType: 'application/json',
+		    // tipo da requisição
 		    type: 'POST',
+		    // Define se o execução deve esperar o retorno ou não
 		    async: false,
 		    success: function (response) {
 		    	var usuario = response.contexto.usuario

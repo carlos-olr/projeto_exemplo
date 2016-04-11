@@ -1,39 +1,27 @@
-<html>
-<head>
-	<META http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" ></link>
-	<link rel="stylesheet" href="../css/login/login.css" ></link>
-</head>
-<body>
-
-	<nav class="navbar navbar-default" ng-if="isLogado">
-		<div class="container-fluid">
-			<ul class="nav navbar-nav">
-				<li>
-					<a href="usuario.html">Usu√°rios</a>
-				</li>
-				<li>
-					<a href="papel.html">Pap√©is</a>
-				</li>
-				<li class="{{isAtivo('grupo')}}">
-					<a href="grupo.html">Grupos</a>
-				</li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><p class="navbar-text">{{getMensagemApresentacao()}}</p></li>
-				<li>
-					<button type="button" class="btn btn-primary logoutBtn" ng-click="doLogout()">Sair</button>
-				</li>
-			</ul>
-		</div>
-	</nav>
-
-	<script type="text/javascript" src="../js/angular.min.js"></script>
-	<script type="text/javascript" src="../js/angular-cookies.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/ui-bootstrap.js"></script>
-	<script type="text/javascript" src="../js/comum/comum.js"></script>
-	<script type="text/javascript" src="../js/login/login.js"></script>
-	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
-</body>
-</html>
+<!-- A tag NAV existe dentro do bootstrap: https://getbootstrap.com/components/#navbar
+	Ela serve para criar menus e submenus.
+	O NG-IF È uma diretiva que serve para renderizar ou n„o um elemento HTML,
+	nesse caso est· sendo usado para controlar se o menu deve aparecer.
+	O NG-IF pode usar funÁıes e veri·veis definidas no Controller ao qual pertence
+	para fazer as verificaÁıes, aqui est· usando a vari·vel isLogado. login.js -->
+<nav class="navbar navbar-default" ng-if="isLogado">
+	<div class="container-fluid">
+		<ul class="nav navbar-nav">
+			<li class="{{isAtivo('usuarios')}}">
+				<a href="usuario.html">Usuarios</a>
+			</li>
+			<li class="{{isAtivo('papeis')}}">
+				<a href="papel.html">Papeis</a>
+			</li>
+			<li class="{{isAtivo('grupo')}}">
+				<a href="grupo.html">Grupos</a>
+			</li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><p class="navbar-text">{{getMensagemApresentacao()}}</p></li>
+			<li>
+				<button type="button" class="btn btn-primary logoutBtn" ng-click="doLogout()">Sair</button>
+			</li>
+		</ul>
+	</div>
+</nav>

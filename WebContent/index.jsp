@@ -6,6 +6,12 @@
 <title>Teste</title>
 </head>
 <body>
-	${papel}
+
+<br>
+	${request}
+	<br>
+	<c:forEach var="i" begin="1" end="5">
+   		Item ${i} <br>
+	</c:forEach>
 </body>
 </html>
