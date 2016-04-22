@@ -4,9 +4,15 @@
 	nesse caso está sendo usado para controlar se o menu deve aparecer.
 	O NG-IF pode usar funções e veriáveis definidas no Controller ao qual pertence
 	para fazer as verificações, aqui está usando a variável isLogado. login.js -->
+	
 <nav class="navbar navbar-default" ng-if="isLogado">
 	<div class="container-fluid">
 		<ul class="nav navbar-nav">
+		
+			<!-- Uma expressão agular '{{CONTEUDO}}' serve para executarmos código 
+				angular em qualquer parte do HTML, aqui é chamada a função isAtivo do 
+				LoginController, login.js linha 28  -->
+				
 			<li class="{{isAtivo('usuarios')}}">
 				<a href="usuario.html">Usuarios</a>
 			</li>
@@ -18,9 +24,14 @@
 			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
+			<!-- Execução de função via expressão angular para colocar valor direto no HTML.
+				a função 'getMensagemApresentacao' está no arquivo login.js, linha  -->
 			<li><p class="navbar-text">{{getMensagemApresentacao()}}</p></li>
 			<li>
-				<button type="button" class="btn btn-primary logoutBtn" ng-click="doLogout()">Sair</button>
+				<!-- O NG-CLICK é uma diretiva para executar funções do scope quando
+					o elemento amrcado for clicado -->
+				<button type="button" class="btn btn-primary logoutBtn" 
+					ng-click="doLogout()">Sair</button>
 			</li>
 		</ul>
 	</div>

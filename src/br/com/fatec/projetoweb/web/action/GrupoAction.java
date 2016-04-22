@@ -9,6 +9,7 @@ public class GrupoAction extends ProjetoWebAction {
 
 	/** */
 	private static final long serialVersionUID = 1071989853380980252L;
+	private static final String DEU_CERTO = "foi";
 
 	private ContextoGrupo contexto = new ContextoGrupo();
 	private GrupoService service;
@@ -19,7 +20,7 @@ public class GrupoAction extends ProjetoWebAction {
 
 	public String listar() {
 		this.contexto.setGrupos(this.service.listar());
-		return SUCCESS;
+		return DEU_CERTO;
 	}
 
 	public String salvar() {

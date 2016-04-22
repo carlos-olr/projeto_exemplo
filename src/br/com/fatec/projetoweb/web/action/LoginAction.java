@@ -11,6 +11,7 @@ public class LoginAction extends ProjetoWebAction {
 
 	/** */
 	private static final long serialVersionUID = 7059748509020357437L;
+	private static final String DEU_CERTO = "foi";
 
 	private UsuarioService service;
 	private ContextoLogin contexto = new ContextoLogin();
@@ -26,16 +27,16 @@ public class LoginAction extends ProjetoWebAction {
 
 		if (usuarioEncontrado != null) {
 			usuarioEncontrado.setStartSession(new Date().getTime());
-			this.contexto.setUsuario(usuarioEncontrado);
 			this.getSession().put("usuario", usuarioEncontrado);
 		}
-		return SUCCESS;
+		this.contexto.setUsuario(usuarioEncontrado);
+		return DEU_CERTO;
 	}
 
 	public String logout() {
 		this.contexto.setUsuario(null);
 		this.getSession().remove("usuario");
-		return SUCCESS;
+		return DEU_CERTO;
 	}
 
 	public ContextoLogin getContexto() {

@@ -3,11 +3,17 @@
 		<div class="form-group">
 			<label for="nome">Usuario:</label>
 			<input type="text" class="form-control" ng-model="usuario.login">
+			<!-- <br/>{{usuario.login}}  -->
 		</div>
 		<div class="form-group">
 			<label for="pwd">Senha:</label>
 			<input type="password" class="form-control" ng-model="usuario.senha">
 		</div>
+		
+		<div class="alert alert-danger" role="alert" ng-show="exibirMensagemErro">
+			<p>usuario/senha invalido</p>
+		</div>
+		
 		<button type="button" class="btn btn-primary" ng-click="doLogin()">Login</button>
 	</form>
 </div>

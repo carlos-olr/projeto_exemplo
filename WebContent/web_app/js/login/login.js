@@ -31,11 +31,12 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$sce',
 	
 	// função que realiza o login no sistema
 	$scope.doLogin = function() {
+		$scope.exibirMensagemErro = false;
 		// primeiro criamos uma variável data que possui um atributo contexto,
 		// este é um objeto que possui um atributo 'usuario' que reebe o usuario
 		// que está no scope da controller.
-		var data = {contexto : {
-			usuario : $scope.usuario
+		var data = {'contexto' : {
+			'usuario' : $scope.usuario
 		}};
 		
 		// JSON é um objeto nativo do JavaScript e serve para converter variaveis
@@ -57,9 +58,11 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$sce',
 		    // Define se o execução deve esperar o retorno ou não
 		    async: false,
 		    success: function (response) {
+		    	// a partir da variável 'response' é possível acessar 
 		    	var usuario = response.contexto.usuario
 		    	if (usuario == null) {
 	    			$scope.exibirMensagemErro = true;
+	    			return;
 		    	}
 		    	$scope.usuario = usuario;
 		    	StorageHelper.setItem(CHAVE_STORAGE, usuario);
@@ -67,6 +70,11 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$sce',
 		    }
 		});
 	};
+	
+	// 
+	$scope.getMensagemApresentacao = function() {
+		return $sce.trustAsHtml("Olá, " + $scope.usuario.nome);
+	}
 	
 	$scope.doLogout	 = function() {
 		var data = {contexto : {
@@ -107,10 +115,6 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$sce',
 		}
 		$scope.$applyAsync();
 	};
-	
-	$scope.getMensagemApresentacao = function() {
-		return $sce.trustAsHtml("Olá, " + $scope.usuario.nome);
-	}
 	
 	setTimeout(function() {
 		$scope.isLogged();

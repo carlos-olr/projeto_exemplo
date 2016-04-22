@@ -25,7 +25,7 @@
 			<interceptor-ref name="cookie"></interceptor-ref>
 		    <interceptor-ref name="cookieProvider"></interceptor-ref>
 		    <interceptor-ref name="defaultStack"></interceptor-ref>
-			<result name="success" type="json" />
+			<result name="foi" type="json" />
 		</action>
 
 	</package>
