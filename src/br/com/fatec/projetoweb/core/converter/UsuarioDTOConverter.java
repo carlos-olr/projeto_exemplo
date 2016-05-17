@@ -33,8 +33,8 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 		this.usuarioGrupoDAO = ImplFinder.getImpl(UsuarioGrupoDAO.class);
 		this.papelConverter = ImplFinder.getFinalImpl(PapelDTOConverter.class);
 		this.GrupoConverter = ImplFinder.getFinalImpl(GrupoDTOConverter.class);
-		this.GrupoDAO = ImplFinder.getFinalImpl(GrupoDAO.class);
-		this.papelDAO = ImplFinder.getFinalImpl(PapelDAO.class);
+		this.GrupoDAO = ImplFinder.getImpl(GrupoDAO.class);
+		this.papelDAO = ImplFinder.getImpl(PapelDAO.class);
 	}
 
 	@Override
@@ -117,11 +117,11 @@ public class UsuarioDTOConverter implements DTOConverter<Usuario, UsuarioDTO> {
 
 	@Override
 	public List<UsuarioDTO> toDTO(List<Usuario> usuarios) {
-		return this.toDTO(usuarios, false);
+		return this.toDTO(usuarios, true);
 	}
 
 	public List<UsuarioDTO> toDTOSimples(List<Usuario> usuarios) {
-		return this.toDTO(usuarios, true);
+		return this.toDTO(usuarios, false);
 	}
 
 	@Override
